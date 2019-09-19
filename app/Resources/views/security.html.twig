@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport">
+	<title>Connexion à GESTOCK</title>
+	<link rel="icon" type="image/x-icon" href="{{ absolute_url(asset('ressources/img/icon-01.png')) }}"/>
+	<link rel="icon" href="{{ absolute_url(asset('ressources/img/icon-01.png')) }}" type="image/png" sizes="16x16">
+	<link rel='stylesheet' href='{{ absolute_url(asset('ressources/assets/css/pace.css'))}}'/>
+	<script src='{{ absolute_url(asset('ressources/assets/js/pace.min.js'))}}'></script>
+	<!--vendors-->
+	<link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/bundles/291bbeead57f19651f311362abe809b67adc3fb5.css')) }}'/>
+
+	<link rel='stylesheet' href='{{ absolute_url(asset('ressources/assets/bundles/30bc673ce76f73ecf02568498f6b139269f6e4c7.css')) }}'/>
+
+
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,600" rel="stylesheet">
+	<link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/css/materialdesignicons.min.css'))}}'/>
+	<link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/css/feather-icons.css'))}}'/>
+	<link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/css/atmos.min.css'))}}'/>
+
+</head>
+<body class="jumbo-page">
+
+<main class="admin-main  ">
+	<div class="container-fluid">
+		<div class="row ">
+			<div class="col-lg-4  bg-white">
+				<div class="row align-items-center m-h-100">
+					<div class="mx-auto col-md-8">
+						<div class="p-b-20 text-center">
+							<p>
+								<img src="{{ absolute_url(asset('ressources/img/icon-01.png')) }}"  alt="">
+
+							</p>
+						</div>
+						<div class="p-b-20 text-center">
+							<div>
+								<h3 class="text-center p-b-20 fw-400">
+									{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+										{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+										<a href="{{ path('fos_user_security_logout') }}">
+											{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+										</a>
+									{% else %}
+										<a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+									{% endif %}
+								</h3>
+							</div>
+
+							{% if app.request.hasPreviousSession %}
+								{% for type, messages in app.session.flashbag.all() %}
+									{% for message in messages %}
+										<div class="flash-{{ type }}">
+											{{ message }}
+										</div>
+									{% endfor %}
+								{% endfor %}
+							{% endif %}
+
+						</div>
+						{% block fos_user_content %}
+						{% endblock fos_user_content %}
+
+					</div>
+
+				</div>
+			</div>
+			<div class="col-lg-8 d-none d-md-block bg-cover" style="background-image: url({{ asset('ressources/img/bg-login.jpg') }});">
+
+			</div>
+		</div>
+	</div>
+</main>
+
+<script src='{{ absolute_url(asset('ressources/assets/bundles/9556cd6744b0b19628598270bd385082cda6a269.js')) }}'></script>
+
+</body>
+
+</html>
