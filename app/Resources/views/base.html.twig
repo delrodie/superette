@@ -2,12 +2,249 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport">
+        <title>{% block title %}GESTOCK::{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel='stylesheet' href='{{ absolute_url(asset('ressources/assets/css/pace.css'))}}'/>
+            <script src='{{ absolute_url(asset('ressources/assets/js/pace.min.js'))}}'></script>
+            <link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/bundles/291bbeead57f19651f311362abe809b67adc3fb5.css')) }}'/>
+            <link rel='stylesheet' href='{{ absolute_url(asset('ressources/assets/bundles/30bc673ce76f73ecf02568498f6b139269f6e4c7.css')) }}'/>
+            <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,600" rel="stylesheet">
+            <link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/css/materialdesignicons.min.css'))}}'/>
+            <link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/css/feather-icons.css'))}}'/>
+            <link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/css/atmos.min.css'))}}'/>
+            <link rel="stylesheet" href="{{ absolute_url(asset('ressources/vendor/fontawesome/css/all.min.css')) }}">
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ absolute_url(asset('ressources/img/icon-01.png')) }}"/>
+        <link rel="icon" href="{{ absolute_url(asset('ressources/img/icon-01.png')) }}" type="image/png" sizes="16x16">
     </head>
-    <body>
+    <body class="sidebar-pinned ">
+    <aside class="admin-sidebar">
+        <div class="admin-sidebar-brand">
+            <img class="admin-brand-logo" src="{{ absolute_url(asset('ressources/img/icon-01.png')) }}" width="60" alt="atmos Logo">
+            <div class="ml-auto">
+                <a href="#" class="admin-pin-sidebar btn-ghost btn btn-rounded-circle"></a>
+                <a href="#" class="admin-close-sidebar"></a>
+            </div>
+        </div>
+        <div class="admin-sidebar-wrapper js-scrollbar">
+            <ul class="menu">
+                <li class="menu-item active ">
+                    <a href="#" class="open-dropdown menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">Tableau de bord
+                            <span class="menu-arrow"></span>
+                        </span>
+                    </span>
+                        <span class="menu-icon">
+                        <i class="icon-placeholder fa fa-chart-line "></i>
+                    </span>
+                    </a>
+                    <!--submenu-->
+                    <ul class="sub-menu">
+
+                        <li class="menu-item ">
+                            <a href='index.html' class=' menu-link'>
+                            <span class="menu-label">
+                                <span class="menu-name">Statistique caisse</span>
+                            </span>
+                                <span class="menu-icon">
+                                <i class="icon-placeholder fe fe-activity"></i>
+                            </span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="menu-item ">
+                    <a href="#" class="open-dropdown menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">Vente</span>
+                    </span>
+                        <span class="menu-icon">
+                        <i class="icon-placeholder fa fa-cash-register"></i>
+                    </span>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a href="#" class="open-dropdown menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">Caisse</span>
+                    </span>
+                        <span class="menu-icon">
+                        <i class="icon-placeholder fa fa-wallet"></i>
+                    </span>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a href="#" class="open-dropdown menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">Produits
+                            <span class="menu-arrow"></span>
+                        </span>
+                    </span>
+                        <span class="menu-icon">
+                        <i class="icon-placeholder fa fa-cubes"></i>
+                    </span>
+                    </a>
+                    <!--submenu-->
+                    <ul class="sub-menu">
+                        <li class="menu-item">
+                            <a href='#' class=' menu-link'>
+                            <span class="menu-label">
+                                <span class="menu-name">Inventaire</span>
+                            </span>
+                                <span class="menu-icon"><i class="icon-placeholder fa fa-truck"></i></span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href='#' class=' menu-link'>
+                            <span class="menu-label">
+                                <span class="menu-name">Domaines</span>
+                            </span>
+                                <span class="menu-icon"><i class="icon-placeholder fa fa-box-open"></i></span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href='#' class=' menu-link'>
+                            <span class="menu-label">
+                                <span class="menu-name">Catégories</span>
+                            </span>
+                                <span class="menu-icon"><i class="icon-placeholder fa fa-boxes"></i></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item ">
+                    <a href="fournisseur.html" class="menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">Fournisseurs</span>
+                    </span>
+                        <span class="menu-icon">
+                        <i class="icon-placeholder fa fa-users"></i>
+                    </span>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a href="#" class="open-dropdown menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">Paramètres
+                            <span class="menu-arrow"></span>
+                        </span>
+                    </span>
+                        <span class="menu-icon">
+                        <i class="icon-placeholder fa fa-cogs"></i>
+                    </span>
+                    </a>
+                    <!--submenu-->
+                    <ul class="sub-menu">
+                        <li class="menu-item">
+                            <a href='fournisseur.html' class=' menu-link'>
+                            <span class="menu-label">
+                                <span class="menu-name">Gestionnaire</span>
+                            </span>
+                                <span class="menu-icon"><i class="icon-placeholder fa fa-users-cog"></i></span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href='#' class=' menu-link'>
+                            <span class="menu-label">
+                                <span class="menu-name">Utilisateurs</span>
+                            </span>
+                                <span class="menu-icon"><i class="icon-placeholder fa fa-user-friends"></i></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    </aside>
+    <main class="admin-main">
+        <header class="admin-header">
+
+            <a href="#" class="sidebar-toggle" data-toggleclass="sidebar-open" data-target="body"> </a>
+
+            <nav class=" mr-auto my-auto">
+                <ul class="nav align-items-center">
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-target="#siteSearchModal" data-toggle="modal" href="#">
+                            <i class=" mdi mdi-magnify mdi-24px align-middle"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <nav class=" ml-auto">
+                <ul class="nav align-items-center">
+                    <li class="nav-item dropdown ">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <div class="avatar avatar-sm avatar-online">
+                                <span class="avatar-title rounded-circle bg-dark">S</span>
+
+                            </div>
+                        </a>
+                        <div class="dropdown-menu  dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ absolute_url(path('fos_user_change_password'))}}"><i class="fa fa-user-edit"></i> Modifier le Password</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ absolute_url(path('fos_user_security_logout'))}}"> <i class="fa fa-lock"></i> Deconnexion</a>
+                        </div>
+                    </li>
+                </ul>
+
+            </nav>
+        </header>
+    </main>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+
+        <div class="modal modal-slide-left  fade" id="siteSearchModal" tabindex="-1" role="dialog"
+             aria-labelledby="siteSearchModal"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-body p-all-0" id="site-search">
+                        <button type="button" class="close light" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="form-dark bg-dark text-white p-t-60 p-b-20 bg-dots">
+                            <h3 class="text-uppercase    text-center  fw-300 "> Recherche</h3>
+
+                            <div class="container-fluid">
+                                <div class="col-md-10 p-t-10 m-auto">
+                                    <input type="search" placeholder="Rechercher le produit" class=" search form-control form-control-lg">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="bg-dark text-muted container-fluid p-b-10 text-center text-overline">
+                                Resultats
+                            </div>
+                            <div class="list-group list  ">
+                                <div class="list-group-item d-flex  align-items-center">
+                                    <div class="">
+                                        <div class="name">Amoikon dieudonne</div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item d-flex  align-items-center">
+                                    <div class="">
+                                        <div class="name">Aicha Seynou</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% block javascripts %}
+            <script src='{{ absolute_url(asset('ressources/assets/bundles/9556cd6744b0b19628598270bd385082cda6a269.js')) }}'></script>
+            <script src='{{ absolute_url(asset('ressources/assets/js/apexcharts.min.js'))}}'></script>
+            <script src='{{ absolute_url(asset('ressources/assets/js/dashboard-01.js'))}}'></script>
+            <script src="{{ absolute_url(asset('ressources/vendor/fontawesome/js/all.js')) }}"></script>
+        {% endblock %}
     </body>
 </html>

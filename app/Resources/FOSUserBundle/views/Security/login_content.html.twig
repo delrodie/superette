@@ -4,7 +4,7 @@
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
 
-<form action="{{ path("fos_user_security_check") }}" method="post">
+<form action="{{ path("fos_user_security_check") }}" method="post" class="needs-validation">
     {% if csrf_token %}
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
     {% endif %}
@@ -15,10 +15,10 @@
         <div class="form-group floating-label col-md-12">
             <input type="password" id="password" class="form-control " name="_password" required="required" placeholder="{{ 'security.login.password'|trans }}" />
         </div>
-        <div class="form-group floating-label col-md-12">
+        <!--<div class="form-group floating-label col-md-12">
             <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
             <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
-        </div>
+        </div>-->
     </div>
 
     <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-primary btn-block btn-lg" />
