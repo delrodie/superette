@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,35 +24,42 @@ class UserType extends AbstractType
         $builder
             ->add('username', TextType::class, array(
               'attr'  => array(
-                  'class' => 'form-control',
-                  'autocomplete'  => 'off'
+                  'class' => 'form-control form-control-lg',
+                  'autocomplete'  => 'off',
+                  'placeholder' => 'Nom utilisateur'
               )
         ))
             //->add('usernameCanonical')
             ->add('email', EmailType::class, array(
               'attr'  => array(
-                  'class' => 'form-control',
-                  'autocomplete'  => 'off'
+                  'class' => 'form-control form-control-lg',
+                  'autocomplete'  => 'off',
+                  'placeholder' => "Adresse email"
               )
         ))
             //->add('emailCanonical')
-            ->add('enabled')
-            //->add('salt')
-            ->add('plainPassword', RepeatedType::class, array(
+            ->add('enabled', CheckboxType::class,[
+                'attr'=>['class'=>'custom-control-input'], 'required'=>false
+            ])
+            ->add('password', PasswordType::class,[
+                'attr'=>['class'=>'form-control form-control-lg', 'placeholder'=>"Mot de passe"], 'required'=>false
+            ])
+            /*->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe doivent être identiques.',
                 'required' => $options['passwordRequired'],
                 'first_options'  => array('label' => 'Mot de passe'),
                 'second_options' => array('label' => 'Répétez le mot de passe'),
-            ))
+            ))*/
             //->add('lastLogin')->add('confirmationToken')->add('passwordRequestedAt')
             ->add('roles', ChoiceType::class, array(
               'choices' => array(
                 'UTILISATEUR '  => 'ROLE_USER',
+                'CAISSE '  => 'ROLE_CAISSE',
+                'RAYON '  => 'ROLE_RAYON',
                 'ADMINISTRATEUR '  => 'ROLE_ADMIN',
               ),
               'attr'  => array(
-                  'class' => 'form-control',
                   'autocomplete'  => 'off'
               ),
               'multiple'  => true,

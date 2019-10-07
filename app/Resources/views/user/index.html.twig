@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{ parent() }}Gestion des utilisateurs{% endblock %}
+{% block title %}{{ parent() }} Gestion des utilisateurs{% endblock %}
 {% block body %}
     <section class="admin-content">
         <div class="bg-dark">
@@ -38,6 +38,15 @@
                                             <td>
                                                 {% if (user.enabled) %}
                                                     <span class="text-success">{{user.username}}</span>
+                                                    {% if user.roles %}
+                                                        {% if user.roles|first == 'ROLE_ADMIN' %}
+                                                            (Admin)
+                                                        {% elseif user.roles|first == 'ROLE_CAISSE' %}
+                                                            (Caisse)
+                                                        {% else %}
+                                                            (rayon)
+                                                        {% endif %}
+                                                    {% endif %}
                                                 {% else %}
                                                     <span class="text-danger">{{user.username}}</span>
                                                 {% endif %}
@@ -46,7 +55,7 @@
                                             <td class="text-center">{{ user.lastLogin|date('d-m-Y h:i:s')}}</td>
                                             <td class="text-center">
                                                 <a href="#"><i class="fa fa-eye"></i></a> |
-                                                <a href="#"><i class="fa fa-edit"></i></a>
+                                                <a href="{{ path('admin_user_edit', {'id': user.id}) }}" title="Modifier le mot de passe"><i class="fa fa-edit"></i></a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -65,26 +74,32 @@
                             <h5 class="m-b-0">Enregistrement</h5>
                         </div>
                         <div class="card-body ">
+                            {{ form_start(form)}}
                             <div class="form-row">
                                 <div class="col-12 form-group">
-                                    <input class="form-control form-control-lg" type="text" placeholder="Nom du fournisseur">
+                                    {{ form_widget(form.username)}}
+                                    {{ form_errors(form.username) }}
                                 </div>
                                 <div class="col-12 form-group">
-                                    <input class="form-control form-control-lg" type="text" placeholder="Contacts du fournisseur">
+                                    {{ form_widget(form.email)}}
+                                    {{ form_errors(form.email)}}
                                 </div>
                                 <div class="col-12 form-group">
-                                    <input class="form-control form-control-lg" type="text" placeholder="Email du fournisseur">
+                                    {{ form_widget(form.password)}}
+                                    {{ form_errors((form.password)) }}
                                 </div>
                                 <div class="col-12 form-group">
-                                    <input class="form-control form-control-lg" type="text" placeholder="Localisation du fournisseur">
+                                    {{ form_widget(form.roles)}}
                                 </div>
-                                <div class="col-12 form-group">
-                                    <textarea name="" id="" cols="30" rows="5" class="form-control form-control-lg"></textarea>
+                                <div class="custom-control custom-checkbox">
+                                    {{ form_widget(form.enabled)}}
+                                    <label class="custom-control-label" for="appbundle_user_enabled">Activer</label>
                                 </div>
                             </div>
                             <div class="form-group text-right">
                                 <button class="btn btn-primary">Enregistrer</button>
                             </div>
+                            {{ form_end(form) }}
                         </div>
                     </div>
                 </div>

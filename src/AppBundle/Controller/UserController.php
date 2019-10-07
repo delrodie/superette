@@ -18,16 +18,35 @@ class UserController extends Controller
      * Lists all user entities.
      *
      * @Route("/", name="admin_user_index")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $user = new User();
+        $form = $this->createForm('AppBundle\Form\UserType', $user);
+        $form->handleRequest($request);
 
-        $users = $em->getRepository('AppBundle:User')->findAll();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $user->setEnabled(true);
+
+            //Encodage du mot de passe
+            $encoder = $this->container->get('security.password_encoder');
+            $encoded = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($encoded);
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirectToRoute('admin_user_index');
+        }
+
+        $users = $em->getRepository('AppBundle:User')->findUsers();
 
         return $this->render('user/index.html.twig', array(
             'users' => $users,
+            'user' => $user,
+            'form' => $form->createView(),
         ));
     }
 
@@ -46,6 +65,11 @@ class UserController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $user->setEnabled(true);
+
+            //Encodage du mot de passe
+            $encoder = $this->container->get('security.password_encoder');
+            $encoded = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($encoded);
             $em->persist($user);
             $em->flush();
 
@@ -92,13 +116,24 @@ class UserController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            if ($user->getPassword()){
+                //Encodage du mot de passe
+                $encoder = $this->container->get('security.password_encoder');
+                $encoded = $encoder->encodePassword($user, $user->getPassword());
+                $user->setPassword($encoded);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('admin_user_edit', array('id' => $user->getId()));
+            return $this->redirectToRoute('admin_user_index');
         }
+        $em = $this->getDoctrine()->getManager();
+
+        $users = $em->getRepository('AppBundle:User')->findUsers();
 
         return $this->render('user/edit.html.twig', array(
             'user' => $user,
+            'users' => $users,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));

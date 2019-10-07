@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport">
-        <title>{% block title %}GESTOCK::{% endblock %}</title>
+        <title>{% block title %}GESTOCK :: {% endblock %}</title>
         {% block stylesheets %}
             <link rel='stylesheet' href='{{ absolute_url(asset('ressources/assets/css/pace.css'))}}'/>
             <script src='{{ absolute_url(asset('ressources/assets/js/pace.min.js'))}}'></script>
@@ -56,106 +56,116 @@
 
                     </ul>
                 </li>
-                <li class="menu-item ">
-                    <a href="#" class="open-dropdown menu-link">
+                {% if is_granted('ROLE_CAISSE') %}
+                    <li class="menu-item ">
+                        <a href="#" class="open-dropdown menu-link">
                     <span class="menu-label">
                         <span class="menu-name">Vente</span>
                     </span>
-                        <span class="menu-icon">
+                            <span class="menu-icon">
                         <i class="icon-placeholder fa fa-cash-register"></i>
                     </span>
-                    </a>
-                </li>
-                <li class="menu-item ">
-                    <a href="#" class="open-dropdown menu-link">
+                        </a>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_CAISSE') %}
+                    <li class="menu-item ">
+                        <a href="#" class="open-dropdown menu-link">
                     <span class="menu-label">
                         <span class="menu-name">Caisse</span>
                     </span>
-                        <span class="menu-icon">
+                            <span class="menu-icon">
                         <i class="icon-placeholder fa fa-wallet"></i>
                     </span>
-                    </a>
-                </li>
-                <li class="menu-item ">
-                    <a href="#" class="open-dropdown menu-link">
+                        </a>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_RAYON') %}
+                    <li class="menu-item ">
+                        <a href="#" class="open-dropdown menu-link">
                     <span class="menu-label">
                         <span class="menu-name">Produits
                             <span class="menu-arrow"></span>
                         </span>
                     </span>
-                        <span class="menu-icon">
+                            <span class="menu-icon">
                         <i class="icon-placeholder fa fa-cubes"></i>
                     </span>
-                    </a>
-                    <!--submenu-->
-                    <ul class="sub-menu">
-                        <li class="menu-item">
-                            <a href='#' class=' menu-link'>
+                        </a>
+                        <!--submenu-->
+                        <ul class="sub-menu">
+                            <li class="menu-item">
+                                <a href='#' class=' menu-link'>
                             <span class="menu-label">
                                 <span class="menu-name">Inventaire</span>
                             </span>
-                                <span class="menu-icon"><i class="icon-placeholder fa fa-truck"></i></span>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href='#' class=' menu-link'>
+                                    <span class="menu-icon"><i class="icon-placeholder fa fa-truck"></i></span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href='#' class=' menu-link'>
                             <span class="menu-label">
                                 <span class="menu-name">Domaines</span>
                             </span>
-                                <span class="menu-icon"><i class="icon-placeholder fa fa-box-open"></i></span>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href='#' class=' menu-link'>
+                                    <span class="menu-icon"><i class="icon-placeholder fa fa-box-open"></i></span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href='#' class=' menu-link'>
                             <span class="menu-label">
                                 <span class="menu-name">Catégories</span>
                             </span>
-                                <span class="menu-icon"><i class="icon-placeholder fa fa-boxes"></i></span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menu-item ">
-                    <a href="fournisseur.html" class="menu-link">
+                                    <span class="menu-icon"><i class="icon-placeholder fa fa-boxes"></i></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="menu-item ">
+                        <a href="fournisseur.html" class="menu-link">
                     <span class="menu-label">
                         <span class="menu-name">Fournisseurs</span>
                     </span>
-                        <span class="menu-icon">
+                            <span class="menu-icon">
                         <i class="icon-placeholder fa fa-users"></i>
                     </span>
-                    </a>
-                </li>
-                <li class="menu-item ">
-                    <a href="#" class="open-dropdown menu-link">
+                        </a>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="menu-item ">
+                        <a href="#" class="open-dropdown menu-link">
                     <span class="menu-label">
                         <span class="menu-name">Paramètres
                             <span class="menu-arrow"></span>
                         </span>
                     </span>
-                        <span class="menu-icon">
+                            <span class="menu-icon">
                         <i class="icon-placeholder fa fa-cogs"></i>
                     </span>
-                    </a>
-                    <!--submenu-->
-                    <ul class="sub-menu">
-                        <li class="menu-item">
-                            <a href='fournisseur.html' class=' menu-link'>
+                        </a>
+                        <!--submenu-->
+                        <ul class="sub-menu">
+                            <li class="menu-item">
+                                <a href='fournisseur.html' class=' menu-link'>
                             <span class="menu-label">
                                 <span class="menu-name">Gestionnaire</span>
                             </span>
-                                <span class="menu-icon"><i class="icon-placeholder fa fa-users-cog"></i></span>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href='{{ absolute_url(path('admin_user_index')) }}' class=' menu-link'>
+                                    <span class="menu-icon"><i class="icon-placeholder fa fa-users-cog"></i></span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href='{{ absolute_url(path('admin_user_index')) }}' class=' menu-link'>
                             <span class="menu-label">
                                 <span class="menu-name">Utilisateurs</span>
                             </span>
-                                <span class="menu-icon"><i class="icon-placeholder fa fa-user-friends"></i></span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                                    <span class="menu-icon"><i class="icon-placeholder fa fa-user-friends"></i></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
             </ul>
         </div>
 
