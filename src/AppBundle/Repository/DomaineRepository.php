@@ -10,4 +10,16 @@ namespace AppBundle\Repository;
  */
 class DomaineRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function liste()
+    {
+        return $this->createQueryBuilder('d')->orderBy('d.libelle','ASC');
+    }
+
+    /**
+     * Nombre de domaine disponible
+     */
+    public function getNombreDomaine()
+    {
+        return $this->createQueryBuilder('d')->select('count(d.id)')->getQuery()->getSingleScalarResult();
+    }
 }

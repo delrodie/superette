@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Domaine;
+use AppBundle\Utils\GestionDomaine;
+use AppBundle\Utils\GestionProduit;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +22,7 @@ class DomaineController extends Controller
      * @Route("/", name="domaine_index")
      * @Method({"GET", "POST"})
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, GestionProduit $gestionProduit)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -31,6 +33,8 @@ class DomaineController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $code = $gestionProduit->codeDomaine();
+            $domaine->setCode($code);
             $em->persist($domaine);
             $em->flush();
 

@@ -6,12 +6,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Domaine
+ * Categorie
  *
- * @ORM\Table(name="domaine")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\DomaineRepository")
+ * @ORM\Table(name="categorie")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CategorieRepository")
  */
-class Domaine
+class Categorie
 {
     /**
      * @var int
@@ -37,16 +37,17 @@ class Domaine
     private $libelle;
 
     /**
-     * @var bool
+     * @var int
      *
-     * @ORM\Column(name="statut", type="boolean", nullable=true)
+     * @ORM\Column(name="nombreProduit", type="integer", nullable=true)
      */
-    private $statut;
+    private $nombreProduit;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Categorie", mappedBy="domaine")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Domaine", inversedBy="categories")
+     * @ORM\JoinColumn(name="domaine_id", referencedColumnName="id")
      */
-    private $categories;
+    private $domaine;
 
     /**
      * @var string
@@ -89,8 +90,6 @@ class Domaine
     private $modifieLe;
 
 
-
-
     /**
      * Get id
      *
@@ -106,7 +105,7 @@ class Domaine
      *
      * @param string $libelle
      *
-     * @return Domaine
+     * @return Categorie
      */
     public function setLibelle($libelle)
     {
@@ -126,27 +125,51 @@ class Domaine
     }
 
     /**
-     * Set statut
+     * Set nombreProduit
      *
-     * @param boolean $statut
+     * @param integer $nombreProduit
      *
-     * @return Domaine
+     * @return Categorie
      */
-    public function setStatut($statut)
+    public function setNombreProduit($nombreProduit)
     {
-        $this->statut = $statut;
+        $this->nombreProduit = $nombreProduit;
 
         return $this;
     }
 
     /**
-     * Get statut
+     * Get nombreProduit
      *
-     * @return bool
+     * @return int
      */
-    public function getStatut()
+    public function getNombreProduit()
     {
-        return $this->statut;
+        return $this->nombreProduit;
+    }
+
+    /**
+     * Set domaine
+     *
+     * @param \AppBundle\Entity\Domaine $domaine
+     *
+     * @return Categorie
+     */
+    public function setDomaine(\AppBundle\Entity\Domaine $domaine = null)
+    {
+        $this->domaine = $domaine;
+
+        return $this;
+    }
+
+    /**
+     * Get domaine
+     *
+     * @return \AppBundle\Entity\Domaine
+     */
+    public function getDomaine()
+    {
+        return $this->domaine;
     }
 
     /**
@@ -154,7 +177,7 @@ class Domaine
      *
      * @param string $slug
      *
-     * @return Domaine
+     * @return Categorie
      */
     public function setSlug($slug)
     {
@@ -178,7 +201,7 @@ class Domaine
      *
      * @param string $publiePar
      *
-     * @return Domaine
+     * @return Categorie
      */
     public function setPubliePar($publiePar)
     {
@@ -202,7 +225,7 @@ class Domaine
      *
      * @param string $modifiePar
      *
-     * @return Domaine
+     * @return Categorie
      */
     public function setModifiePar($modifiePar)
     {
@@ -226,7 +249,7 @@ class Domaine
      *
      * @param \DateTime $publieLe
      *
-     * @return Domaine
+     * @return Categorie
      */
     public function setPublieLe($publieLe)
     {
@@ -250,7 +273,7 @@ class Domaine
      *
      * @param \DateTime $modifieLe
      *
-     * @return Domaine
+     * @return Categorie
      */
     public function setModifieLe($modifieLe)
     {
@@ -268,54 +291,13 @@ class Domaine
     {
         return $this->modifieLe;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add category
-     *
-     * @param \AppBundle\Entity\Categorie $category
-     *
-     * @return Domaine
-     */
-    public function addCategory(\AppBundle\Entity\Categorie $category)
-    {
-        $this->categories[] = $category;
-
-        return $this;
-    }
-
-    /**
-     * Remove category
-     *
-     * @param \AppBundle\Entity\Categorie $category
-     */
-    public function removeCategory(\AppBundle\Entity\Categorie $category)
-    {
-        $this->categories->removeElement($category);
-    }
-
-    /**
-     * Get categories
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
 
     /**
      * Set code
      *
      * @param integer $code
      *
-     * @return Domaine
+     * @return Categorie
      */
     public function setCode($code)
     {

@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} Gestion des categories{% endblock %}
+{% block body %}
+    <section class="admin-content">
+        <div class="bg-dark">
+            <div class="container  m-b-30">
+                <div class="row">
+                    <div class="col-12 text-white p-t-40 p-b-90">
+                        <h4 class="">  Gestion des categories</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container  pull-up">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="card m-b-30">
+                        <div class="card-header">
+                            <h5 class="m-b-0">Liste des categories</h5>
+                        </div>
+                        <div class="card-body ">
+                            <div class="table-responsive p-t-10">
+                                <table id="example" class="table   " style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>Domaines</td>
+                                        <td>Codes</td>
+                                        <td>Noms</td>
+                                        <td>Actions</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for categorie in categories %}
+                                        <tr>
+                                            <td>{{ loop.index }}
+                                            <td>{{ categorie.domaine.libelle }}</td>
+                                            <td>{{ categorie.code }}</td>
+                                            <td>{{ categorie.libelle }}</td>
+                                            <td class="text-center">
+                                                <a href="#"><i class="fa fa-eye"></i></a> |
+                                                <a href="{{ path('categorie_edit', {'slug': categorie.slug}) }}" title="Modifier le categorie"><i class="fa fa-edit"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--widget card ends-->
+
+
+                </div>
+                <div class="col-lg-5">
+                    <div class="card m-b-30">
+                        <div class="card-header">
+                            <h5 class="m-b-0">Modification</h5>
+                        </div>
+                        <div class="card-body ">
+                            {% for message in app.flashes('error') %}
+                                <div class="alert alert-danger  alert-dismissible fade show" role="alert">
+                                    <div class="d-flex">
+                                        <div class="icon">
+                                            <i class="icon mdi mdi-check-circle-outline"></i>
+                                        </div>
+                                        <div class="content">
+                                            <strong></strong> {{ message|raw }}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                            {{ form_start(edit_form)}}
+                            <div class="form-row">
+                                <div class="col-12 form-group">
+                                    {{ form_widget(edit_form.domaine)}}
+                                    {{ form_errors(edit_form.domaine) }}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-12 form-group">
+                                    {{ form_widget(edit_form.libelle)}}
+                                    {{ form_errors(edit_form.libelle) }}
+                                </div>
+                            </div>
+                            <div class="form-group text-right">
+                                <input type="hidden" value="{{ categorie.id }}" name="oldDomaine">
+                                <button class="btn btn-primary">Modifier</button>
+                                {{ form_end(edit_form) }}
+                            </div>
+                            {% if categorie.nombreProduit is null %}
+                                <div class="form-group text-left">
+                                    {{ form_start(delete_form, {'attr': {'onsubmit': 'return confirm("Êtes-vous sur de vouloir supprimer cette catégorie ?");'}}) }}
+                                    <button class="btn btn-danger"><i class="fa fa-trash"></i> Suprimer</button>
+                                    {{ form_end(delete_form) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src='{{ absolute_url(asset('ressources/assets/bundles/ba78fede76f682cd388ed2abbfd1e1568e76f8a4.js')) }}'></script>
+{% endblock %}
