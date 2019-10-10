@@ -53,4 +53,44 @@ class GestionProduit
 
     }
 
+    /**
+     * Generation code du produit
+     */
+    public function codeProduit($categorie)
+    {
+        $dernierCode = $this->em->getRepository("AppBundle:Produit")->findOneBy(['categorie'=>$categorie],['id'=>'DESC']);
+        //dump($dernierCode);die();
+        if ($dernierCode){
+            $reference = $dernierCode->getReference()+1;
+        }else{
+            $categorieCode = $this->em->getRepository("AppBundle:Categorie")->findOneBy(['id'=>$categorie])->getCode();
+            $reference = $categorieCode.'001';
+        }
+        return $reference;
+    }
+
+    /**
+     * Ajout de produit a la categorie
+     */
+    public function addProduit($categorieID)
+    {
+        $categorie = $this->em->getRepository("AppBundle:Categorie")->findOneBy(['id'=>$categorieID]);
+        $categorie->setNombreProduit($categorie->getNombreProduit()+1);
+        $this->em->flush();
+
+        return true;
+    }
+
+    /**
+     * reduction du nombre de produit à la categorie
+     */
+    public function deleteProduit($categorieID)
+    {
+        $categorie = $this->em->getRepository("AppBundle:Categorie")->findOneBy(['id'=>$categorieID]);
+        $categorie->setNombreProduit($categorie->getNombreProduit()-1);
+        $this->em->flush();
+
+        return true;
+    }
+
 }
