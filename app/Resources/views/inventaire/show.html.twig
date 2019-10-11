@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Inventaire</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ inventaire.id }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ inventaire.date }}</td>
+            </tr>
+            <tr>
+                <th>Montant</th>
+                <td>{{ inventaire.montant }}</td>
+            </tr>
+            <tr>
+                <th>Deduction</th>
+                <td>{{ inventaire.deduction }}</td>
+            </tr>
+            <tr>
+                <th>Nombreproduit</th>
+                <td>{{ inventaire.nombreProduit }}</td>
+            </tr>
+            <tr>
+                <th>Flag</th>
+                <td>{% if inventaire.flag %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Publiepar</th>
+                <td>{{ inventaire.publiePar }}</td>
+            </tr>
+            <tr>
+                <th>Modifiepar</th>
+                <td>{{ inventaire.modifiePar }}</td>
+            </tr>
+            <tr>
+                <th>Publiele</th>
+                <td>{{ inventaire.publieLe }}</td>
+            </tr>
+            <tr>
+                <th>Modifiele</th>
+                <td>{{ inventaire.modifieLe }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('inventaire_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('inventaire_edit', { 'id': inventaire.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

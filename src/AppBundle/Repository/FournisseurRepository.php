@@ -39,4 +39,12 @@ class FournisseurRepository extends \Doctrine\ORM\EntityRepository
         }
     }
 
+    /**
+     * Liste des fournisseur par ordre alphabetique
+     */
+    public function liste()
+    {
+        return $this->createQueryBuilder('f')->orderBy('f.nom', 'ASC');
+    }
+
 }
