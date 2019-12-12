@@ -83,11 +83,14 @@ class FournisseurController extends Controller
         $em = $this->getDoctrine()->getManager();
         $deleteForm = $this->createDeleteForm($fournisseur);
         $fournisseurs = $em->getRepository("AppBundle:Fournisseur")->findAll();
+        $inventaires = $em->getRepository("AppBundle:Inventaire")->findBy(['fournisseur'=>$fournisseur->getId()],['date'=>'DESC']);
+        //dump($inventaires);die();
 
         return $this->render('fournisseur/show.html.twig', array(
             'fournisseur' => $fournisseur,
             'fournisseurs' => $fournisseurs,
             'delete_form' => $deleteForm->createView(),
+            'inventaires' => $inventaires,
         ));
     }
 

@@ -39,7 +39,7 @@ class InventaireController extends Controller
             $em->persist($inventaire);
             $em->flush();
 
-            return $this->redirectToRoute('inventaire_index');
+            return $this->redirectToRoute('inventorier_index',['inventaire'=>$inventaire->getId()]);
         }
 
         return $this->render('inventaire/index.html.twig', array(
@@ -99,6 +99,9 @@ class InventaireController extends Controller
      */
     public function editAction(Request $request, Inventaire $inventaire)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $inventaires = $em->getRepository('AppBundle:Inventaire')->findAll();
         $deleteForm = $this->createDeleteForm($inventaire);
         $editForm = $this->createForm('AppBundle\Form\InventaireType', $inventaire);
         $editForm->handleRequest($request);
@@ -106,11 +109,12 @@ class InventaireController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('inventaire_edit', array('id' => $inventaire->getId()));
+            return $this->redirectToRoute('inventorier_index', array('inventaire' => $inventaire->getId()));
         }
 
         return $this->render('inventaire/edit.html.twig', array(
             'inventaire' => $inventaire,
+            'inventaires' => $inventaires,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));

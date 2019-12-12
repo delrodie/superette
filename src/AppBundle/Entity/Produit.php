@@ -60,6 +60,20 @@ class Produit
     /**
      * @var int
      *
+     * @ORM\Column(name="old_prixAchat", type="integer", nullable=true)
+     */
+    private $oldPrixAchat;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="old_prixVente", type="integer", nullable=true)
+     */
+    private $oldPrixvente;
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="stock", type="integer", nullable=true)
      */
     private $stock;
@@ -500,5 +514,53 @@ class Produit
     public function getInventaire()
     {
         return $this->inventaire;
+    }
+
+    /**
+     * Set oldPrixAchat
+     *
+     * @param integer $oldPrixAchat
+     *
+     * @return Produit
+     */
+    public function setOldPrixAchat($oldPrixAchat)
+    {
+        $this->oldPrixAchat = $oldPrixAchat;
+
+        return $this;
+    }
+
+    /**
+     * Get oldPrixAchat
+     *
+     * @return integer
+     */
+    public function getOldPrixAchat()
+    {
+        return $this->oldPrixAchat;
+    }
+
+    /**
+     * Set oldPrixvente
+     *
+     * @param integer $oldPrixvente
+     *
+     * @return Produit
+     */
+    public function setOldPrixvente($oldPrixvente)
+    {
+        $this->oldPrixvente = $oldPrixvente;
+
+        return $this;
+    }
+
+    /**
+     * Get oldPrixvente
+     *
+     * @return integer
+     */
+    public function getOldPrixvente()
+    {
+        return $this->oldPrixvente;
     }
 }

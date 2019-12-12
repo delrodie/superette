@@ -14,7 +14,7 @@
 
         <div class="container  pull-up">
             <div class="row">
-                <div class="col-lg-7">
+                <div class="col-lg-8">
 
                     <div class="card m-b-30">
                         <div class="card-header">
@@ -57,7 +57,7 @@
                                             <td>{{ inventaire.date|date('d-m-Y') }}</td>
                                             <td>{{ inventaire.montant }}</td>
                                             <td class="text-center">
-                                                <a href="#"><i class="fa fa-eye"></i></a> |
+                                                <a href="{{ path('inventorier_show', {'id': inventaire.id}) }}"><i class="fa fa-eye"></i></a> |
                                                 <a href="{{ path('inventaire_edit', {'id': inventaire.id}) }}" title="Modifier le inventaire"><i class="fa fa-edit"></i></a>
                                             </td>
                                         </tr>
@@ -71,7 +71,7 @@
 
 
                 </div>
-                <div class="col-lg-5">
+                <div class="col-lg-4">
                     <div class="card m-b-30">
                         <div class="card-header">
                             <h5 class="m-b-0">Enregistrement</h5>

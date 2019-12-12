@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{ parent() }} Gestion des categories{% endblock %}
+{% block title %}{{ parent() }} Gestion des inventoriers{% endblock %}
 {% block body %}
     <section class="admin-content">
         <div class="bg-dark">
             <div class="container  m-b-30">
                 <div class="row">
                     <div class="col-12 text-white p-t-40 p-b-90">
-                        <h4 class="">  Gestion des categories</h4>
+                        <h4 class="">  Gestion des produits</h4>
                     </div>
                 </div>
             </div>
@@ -18,7 +18,7 @@
 
                     <div class="card m-b-30">
                         <div class="card-header">
-                            <h5 class="m-b-0">Liste des categories</h5>
+                            <h5 class="m-b-0">Liste des produits</h5>
                         </div>
                         <div class="card-body ">
                             {% for message in app.flashes('notice') %}
@@ -36,27 +36,47 @@
                                     </div>
                                 </div>
                             {% endfor %}
+                            {% for message in app.flashes('error') %}
+                                <div class="alert alert-danger  alert-dismissible fade show" role="alert">
+                                    <div class="d-flex">
+                                        <div class="icon">
+                                            <i class="icon mdi mdi-check-circle-outline"></i>
+                                        </div>
+                                        <div class="content">
+                                            <strong></strong> {{ message|raw }}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
                             <div class="table-responsive p-t-10">
-                                <table id="example" class="table   " style="width:100%">
+                                <table class="" style="width:100%">
                                     <thead>
                                     <tr>
                                         <td>ID</td>
-                                        <td>Domaines</td>
-                                        <td>Codes</td>
-                                        <td>Noms</td>
-                                        <td>Actions</td>
+                                        <td>References</td>
+                                        <td>Produits</td>
+                                        <td>Qte</td>
+                                        <td>Montants</td>
+                                        <td>PU</td>
+                                        <td></td>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for categorie in categories %}
+                                    {% set pu = 0 %}
+                                    {% for inventorier in inventoriers %}
+                                        {% set pu = inventorier.montant / inventorier.quantite %}
                                         <tr>
                                             <td>{{ loop.index }}
-                                            <td>{{ categorie.domaine.libelle }}</td>
-                                            <td>{{ categorie.code }}</td>
-                                            <td>{{ categorie.libelle }}</td>
+                                            <td>{{ inventorier.produit.reference }}</td>
+                                            <td>{{ inventorier.produit.libelle }}</td>
+                                            <td>{{ inventorier.quantite }}</td>
+                                            <td>{{ inventorier.montant }}</td>
+                                            <td>{{ pu|round }}</td>
                                             <td class="text-center">
-                                                <a href="#"><i class="fa fa-eye"></i></a> |
-                                                <a href="{{ path('categorie_edit', {'slug': categorie.slug}) }}" title="Modifier le categorie"><i class="fa fa-edit"></i></a>
+                                                <a href="{{ path('inventorier_edit', {'id': inventorier.id}) }}" title="Modifier le inventorier"><i class="fa fa-edit"></i></a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -78,17 +98,31 @@
                             {{ form_start(form)}}
                             <div class="form-row">
                                 <div class="col-12 form-group">
-                                    {{ form_widget(form.domaine)}}
-                                    {{ form_errors(form.domaine) }}
+                                    {{ form_widget(form.inventaire)}}
+                                    {{ form_errors(form.inventaire) }}
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-12 form-group">
-                                    {{ form_widget(form.libelle)}}
-                                    {{ form_errors(form.libelle) }}
+                                    {{ form_widget(form.produit)}}
+                                    {{ form_errors(form.produit) }}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-12 form-group">
+                                    {{ form_widget(form.quantite)}}
+                                    {{ form_errors(form.quantite) }}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-12 form-group">
+                                    {{ form_widget(form.montant)}}
+                                    {{ form_errors(form.montant) }}
                                 </div>
                             </div>
                             <div class="form-group text-right">
+                                <a href="{{ path('inventaire_index') }}" class="btn btn-danger"><i class="fa fa-reply"></i></a>
+                                <input type="reset" class="btn btn-default" value="Annuler">
                                 <button class="btn btn-primary">Enregistrer</button>
                             </div>
                             {{ form_end(form) }}

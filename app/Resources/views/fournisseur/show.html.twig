@@ -93,8 +93,52 @@
                     </div>
                 </div>
             </div>
+            {% if inventaires %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card m-b-30">
+                            <div class="card-header">
+                                <h5 class="m-b-0">Liste des achats de ce fournisseur</h5>
+                            </div>
+                            <div class="card-body ">
+                                <div class="table-responsive p-t-10">
+                                    <table id="example" class="table   " style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <td>ID</td>
+                                            <td>Dates</td>
+                                            <td>References</td>
+                                            <td>Codes</td>
+                                            <td>Montants</td>
+                                            <td>Produits</td>
+                                            <td>Actions</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for inventaire in inventaires %}
+                                            <tr>
+                                                <td>{{ loop.index }}
+                                                <td>{{ inventaire.date|date('d-m-Y') }}</td>
+                                                <td>{{ inventaire.refFournisseur }}</td>
+                                                <td>{{ inventaire.reference }}</td>
+                                                <td>{{ inventaire.montant|number_format(0,'','.') }}</td>
+                                                <td>{{ inventaire.nombreProduit }}</td>
+                                                <td class="text-center">
+                                                    <a href="{{ path('inventorier_show', {'id': inventaire.id}) }}"><i class="fa fa-eye"></i></a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!--widget card ends-->
 
 
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </section>
 {% endblock %}

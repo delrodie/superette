@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{ parent() }} Gestion des inventaires{% endblock %}
+{% block title %}{{ parent() }} Gestion des inventoriers{% endblock %}
 {% block body %}
     <section class="admin-content">
         <div class="bg-dark">
             <div class="container  m-b-30">
                 <div class="row">
                     <div class="col-12 text-white p-t-40 p-b-90">
-                        <h4 class="">  Gestion des inventaires</h4>
+                        <h4 class="">  Gestion des produits</h4>
                     </div>
                 </div>
             </div>
@@ -18,7 +18,7 @@
 
                     <div class="card m-b-30">
                         <div class="card-header">
-                            <h5 class="m-b-0">Liste des inventaires</h5>
+                            <h5 class="m-b-0">Liste des produits</h5>
                         </div>
                         <div class="card-body ">
                             {% for message in app.flashes('notice') %}
@@ -36,29 +36,47 @@
                                     </div>
                                 </div>
                             {% endfor %}
+                            {% for message in app.flashes('error') %}
+                                <div class="alert alert-danger  alert-dismissible fade show" role="alert">
+                                    <div class="d-flex">
+                                        <div class="icon">
+                                            <i class="icon mdi mdi-check-circle-outline"></i>
+                                        </div>
+                                        <div class="content">
+                                            <strong></strong> {{ message|raw }}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
                             <div class="table-responsive p-t-10">
-                                <table id="example" class="table   " style="width:100%">
+                                <table class="" style="width:100%">
                                     <thead>
                                     <tr>
                                         <td>ID</td>
                                         <td>References</td>
-                                        <td>Fournisseurs</td>
-                                        <td>Dates</td>
+                                        <td>Produits</td>
+                                        <td>Qte</td>
                                         <td>Montants</td>
-                                        <td>Actions</td>
+                                        <td>PU</td>
+                                        <td></td>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for inventaire in inventaires %}
+                                    {% set pu = 0 %}
+                                    {% for inventorier in inventoriers %}
+                                        {% set pu = inventorier.montant / inventorier.quantite %}
                                         <tr>
                                             <td>{{ loop.index }}
-                                            <td>{{ inventaire.reference }}</td>
-                                            <td>{{ inventaire.fournisseur.nom }}</td>
-                                            <td>{{ inventaire.date|date('d-m-Y') }}</td>
-                                            <td>{{ inventaire.montant }}</td>
+                                            <td>{{ inventorier.produit.reference }}</td>
+                                            <td>{{ inventorier.produit.libelle }}</td>
+                                            <td>{{ inventorier.quantite }}</td>
+                                            <td>{{ inventorier.montant }}</td>
+                                            <td>{{ pu|round }}</td>
                                             <td class="text-center">
-                                                <a href="{{ path('inventorier_show', {'id': inventaire.id}) }}"><i class="fa fa-eye"></i></a> |
-                                                <a href="{{ path('inventaire_edit', {'id': inventaire.id}) }}" title="Modifier le inventaire"><i class="fa fa-edit"></i></a>
+                                                <a href="{{ path('inventorier_edit', {'id': inventorier.id}) }}" title="Modifier le inventorier"><i class="fa fa-edit"></i></a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -80,39 +98,43 @@
                             {{ form_start(edit_form)}}
                             <div class="form-row">
                                 <div class="col-12 form-group">
-                                    {{ form_widget(edit_form.fournisseur)}}
-                                    {{ form_errors(edit_form.fournisseur) }}
+                                    <label for="appbundle_inventorier_inventaire" class="text-info"><em>Code inventaire</em></label>
+                                    {{ form_widget(edit_form.inventaire)}}
+                                    {{ form_errors(edit_form.inventaire) }}
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-12 form-group">
-                                    {{ form_widget(edit_form.refFournisseur)}}
-                                    {{ form_errors(edit_form.refFournisseur) }}
+                                    <label for="appbundle_inventorier_produit" class="text-info"><em>Nom du produit</em></label>
+                                    {{ form_widget(edit_form.produit)}}
+                                    {{ form_errors(edit_form.produit) }}
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-12 form-group">
-                                    {{ form_widget(edit_form.date)}}
-                                    {{ form_errors(edit_form.date) }}
+                                    <label for="appbundle_inventorier_quantite" class="text-info"><em>Quantité</em></label>
+                                    {{ form_widget(edit_form.quantite)}}
+                                    {{ form_errors(edit_form.quantite) }}
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-12 form-group">
-                                    {% if inventaire.deduction == 0 %}
-                                        {{ form_widget(edit_form.montant,{'attr':{'readonly':'readonly'}})}}
-                                    {% else %}
-                                        {{ form_widget(edit_form.montant)}}
-                                    {% endif %}
+                                    <label for="appbundle_inventorier_montant" class="text-info"><em>Montant</em></label>
+                                    {{ form_widget(edit_form.montant)}}
                                     {{ form_errors(edit_form.montant) }}
                                 </div>
                             </div>
                             <div class="form-group text-right">
+                                <input type="hidden" name="old_produit" value="{{ inventorier.produit.id }}">
+                                <input type="hidden" name="old_quantite" value="{{ inventorier.quantite }}">
+                                <input type="hidden" name="old_montant" value="{{ inventorier.montant }}">
+                                <a href="{{ path('inventorier_index', {'inventaire': inventorier.inventaire.id}) }}" class="btn btn-default">Annuler</a>
                                 <button class="btn btn-primary">Modifier</button>
                             </div>
                             {{ form_end(edit_form) }}
-                            {% if (inventaire.nombreProduit is null) or (inventaire.nombreProduit == 0) %}
+                            {% if (inventorier.quantite < inventorier.produit.stock) %}
                                 <div class="form-group text-left">
-                                    {{ form_start(delete_form, {'attr': {'onsubmit': 'return confirm("Êtes-vous sur de vouloir supprimer cet inventaire ?");'}}) }}
+                                    {{ form_start(delete_form, {'attr': {'onsubmit': 'return confirm("Êtes-vous sur de vouloir supprimer ce produit ?");'}}) }}
                                     <button class="btn btn-danger"><i class="fa fa-trash"></i> Suprimer</button>
                                     {{ form_end(delete_form) }}
                                 </div>

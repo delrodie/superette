@@ -10,4 +10,8 @@ namespace AppBundle\Repository;
  */
 class InventaireRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findInventaire($id)
+    {
+        return $this->createQueryBuilder('i')->where('i.id = :id')->setParameter('id', $id);
+    }
 }
