@@ -44,7 +44,7 @@
                     <ul class="sub-menu">
 
                         <li class="menu-item ">
-                            <a href='index.html' class=' menu-link'>
+                            <a href='#' class=' menu-link'>
                             <span class="menu-label">
                                 <span class="menu-name">Statistique caisse</span>
                             </span>
@@ -56,9 +56,9 @@
 
                     </ul>
                 </li>
-                {% if is_granted('ROLE_CAISSE') %}
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <li class="menu-item ">
-                        <a href="#" class="open-dropdown menu-link">
+                        <a href="{{ path('facture_new') }}" class="menu-link">
                     <span class="menu-label">
                         <span class="menu-name">Vente</span>
                     </span>
@@ -68,9 +68,9 @@
                         </a>
                     </li>
                 {% endif %}
-                {% if is_granted('ROLE_CAISSE') %}
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <li class="menu-item ">
-                        <a href="#" class="open-dropdown menu-link">
+                        <a href="#" class="menu-link">
                     <span class="menu-label">
                         <span class="menu-name">Caisse</span>
                     </span>
@@ -141,7 +141,7 @@
                         </a>
                     </li>
                 {% endif %}
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <li class="menu-item ">
                         <a href="#" class="open-dropdown menu-link">
                     <span class="menu-label">

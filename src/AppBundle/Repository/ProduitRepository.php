@@ -14,4 +14,15 @@ class ProduitRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->createQueryBuilder('p')->orderBy('p.libelle', 'ASC');
     }
+
+    public function findByReferenceOrCode($reference)
+    {
+        return $this->createQueryBuilder('p')
+                    ->where('p.reference = :reference')
+                    ->orWhere('p.codebarre = :reference')
+                    ->setParameter('reference', $reference)
+                    ->getQuery()->getSingleResult()
+            ;
+            ;
+    }
 }

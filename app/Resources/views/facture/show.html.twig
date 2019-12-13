@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} Gestion des inventoriers{% endblock %}
+{% block body %}
+    <section class="admin-content">
+        <div class="bg-dark">
+            <div class="container  m-b-30">
+                <div class="row">
+                    <div class="col-12 text-white p-t-40 p-b-90 text-right">
+                        <h1 class="h1" style="font-size: 7em;" id="total">  {{ facture.montant|number_format(0,'','.')}}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container  pull-up">
+            <div class="row">
+                <div class="col-lg-8">
+
+                    <div class="card m-b-30">
+
+                        <div class="card-body ">
+                            {% for message in app.flashes('notice') %}
+                                <div class="alert alert-success  alert-dismissible fade show" role="alert">
+                                    <div class="d-flex">
+                                        <div class="icon">
+                                            <i class="icon mdi mdi-check-circle-outline"></i>
+                                        </div>
+                                        <div class="content">
+                                            <strong></strong> {{ message|raw }}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% for message in app.flashes('error') %}
+                                <div class="alert alert-danger  alert-dismissible fade show" role="alert">
+                                    <div class="d-flex">
+                                        <div class="icon">
+                                            <i class="icon mdi mdi-check-circle-outline"></i>
+                                        </div>
+                                        <div class="content">
+                                            <strong></strong> {{ message|raw }}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <div class="table-responsive p-t-10">
+                                <table class="" style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>Produits</td>
+                                        <td class="text-right">P.U.</td>
+                                        <td class="text-center">Quantite</td>
+                                        <td class="text-right">Montants</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% set pu = 0 %}
+                                    {% for vente in ventes %}
+                                        <tr>
+                                            <td>{{ loop.index }}
+                                            <td>{{ vente.produit.categorie.libelle }} {{ vente.produit.libelle }}</td>
+                                            <td class="text-right">{{ vente.produit.prixVente }}</td>
+                                            <td class="text-center">{{ vente.quantite }}</td>
+                                            <td class="text-right">{{ (vente.quantite * vente.produit.prixVente)|number_format(0,'','.') }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--widget card ends-->
+
+
+                </div>
+                <div class="col-lg-4">
+                    <div class="card m-b-30">
+                        <div class="card-body ">
+                            <form action="" id="facturation">
+                                <div class="form-row">
+                                    <div class="col-12 form-group">
+                                        <label for="appbundle_facture_montant" style="color: #0e31fa"><em>Reduction</em></label>
+                                        <input type="text" class="form-control" name="reduction" id="reduction">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-12 form-group">
+                                        <label for="appbundle_facture_montant" style="color: #0e31fa"><em>Verse</em></label>
+                                        <input type="text" class="form-control" name="verse" id="facturation_verse" onkeyup="verse()" placeholder="Montant versé" style="color: blue; text-align: right; font-weight: bold">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-12 form-group">
+                                        <label for="appbundle_facture_montant" style="color: #0e31fa"><em>Monnaie</em></label>
+                                        <input type="text" class="form-control" name="monnaie" id="facturation_monnaie" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group text-right">
+                                    <input type="text" name="total" id="facturation_total" value="{{ facture.montant }}">
+                                    <button class="btn btn-primary">Valider</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src='{{ absolute_url(asset('ressources/assets/bundles/ba78fede76f682cd388ed2abbfd1e1568e76f8a4.js')) }}'></script>
+    <script src="{{ asset('ressources/js/facturation.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} Gestion des inventoriers{% endblock %}
+{% block body %}
+    <section class="admin-content">
+        <div class="bg-dark">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-white p-t-40 p-b-90"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container  pull-up">
+            <div class="row">
+                <div class="col-lg-8">
+                </div>
+                <div class="col-lg-4">
+                    <div class="card m-b-30">
+                        <div class="card-body ">
+                            {{ form_start(form)}}
+                            <div class="form-group text-right">
+                                <button class="btn btn-primary">Faire une vente</button>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src='{{ absolute_url(asset('ressources/assets/bundles/ba78fede76f682cd388ed2abbfd1e1568e76f8a4.js')) }}'></script>
+{% endblock %}

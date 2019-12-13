@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Ventes list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Quantite</th>
+                <th>Montant</th>
+                <th>Publiepar</th>
+                <th>Modifiepar</th>
+                <th>Publiele</th>
+                <th>Modifiele</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vente in ventes %}
+            <tr>
+                <td><a href="{{ path('vente_show', { 'id': vente.id }) }}">{{ vente.id }}</a></td>
+                <td>{{ vente.quantite }}</td>
+                <td>{{ vente.montant }}</td>
+                <td>{{ vente.publiePar }}</td>
+                <td>{{ vente.modifiePar }}</td>
+                <td>{{ vente.publieLe }}</td>
+                <td>{{ vente.modifieLe }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('vente_show', { 'id': vente.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('vente_edit', { 'id': vente.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('vente_new') }}">Create a new vente</a>
+        </li>
+    </ul>
+{% endblock %}

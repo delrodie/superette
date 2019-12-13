@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Factures list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Montant</th>
+                <th>Nombreproduit</th>
+                <th>Verse</th>
+                <th>Monnaie</th>
+                <th>Reduction</th>
+                <th>Promotion</th>
+                <th>Publiepar</th>
+                <th>Modifiepar</th>
+                <th>Publiele</th>
+                <th>Modifiele</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for facture in factures %}
+            <tr>
+                <td><a href="{{ path('facture_show', { 'id': facture.id }) }}">{{ facture.id }}</a></td>
+                <td>{{ facture.date }}</td>
+                <td>{{ facture.montant }}</td>
+                <td>{{ facture.nombreProduit }}</td>
+                <td>{{ facture.verse }}</td>
+                <td>{{ facture.monnaie }}</td>
+                <td>{{ facture.reduction }}</td>
+                <td>{{ facture.promotion }}</td>
+                <td>{{ facture.publiePar }}</td>
+                <td>{{ facture.modifiePar }}</td>
+                <td>{{ facture.publieLe }}</td>
+                <td>{{ facture.modifieLe }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('facture_show', { 'id': facture.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('facture_edit', { 'id': facture.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('facture_new') }}">Create a new facture</a>
+        </li>
+    </ul>
+{% endblock %}
