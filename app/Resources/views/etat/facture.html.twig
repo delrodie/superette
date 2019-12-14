@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport">
+	<title>{% block title %}GESTOCK :: Factur {{ facture.reference }}{% endblock %}</title>
+	{% block stylesheets %}
+		<link rel='stylesheet' href='{{ absolute_url(asset('ressources/assets/css/pace.css'))}}'/>
+		<script src='{{ absolute_url(asset('ressources/assets/js/pace.min.js'))}}'></script>
+		<link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/bundles/291bbeead57f19651f311362abe809b67adc3fb5.css')) }}'/>
+		<link rel='stylesheet' href='{{ absolute_url(asset('ressources/assets/bundles/30bc673ce76f73ecf02568498f6b139269f6e4c7.css')) }}'/>
+		<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,600" rel="stylesheet">
+		<link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/css/materialdesignicons.min.css'))}}'/>
+		<link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/css/feather-icons.css'))}}'/>
+		<link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/css/atmos.min.css'))}}'/>
+		<link rel="stylesheet" href="{{ absolute_url(asset('ressources/vendor/fontawesome/css/all.min.css')) }}">
+	{% endblock %}
+	<link rel="icon" type="image/x-icon" href="{{ absolute_url(asset('ressources/img/favicon.ico')) }}"/>
+	<link rel="icon" href="{{ absolute_url(asset('ressources/img/favico.ico')) }}" type="image/png" sizes="16x16">
+</head>
+<body class="sidebar-pinned ">
+<aside class="admin-sidebar">
+	<div class="admin-sidebar-brand">
+		<img class="admin-brand-logo" src="{{ absolute_url(asset('ressources/img/logo.png')) }}" width="60" alt="atmos Logo">
+		<div class="ml-auto">
+			<a href="#" class="admin-pin-sidebar btn-ghost btn btn-rounded-circle"></a>
+			<a href="#" class="admin-close-sidebar"></a>
+		</div>
+	</div>
+
+
+</aside>
+<main class="admin-main">
+	<section class="admin-content ">
+		<div class="bg-dark m-b-30">
+			<div class="container">
+				<div class="row p-b-60 p-t-60">
+
+					<div class="col-md-6 text-white p-b-30">
+						<div class="media">
+							<div class="media-body">
+								<div class="row">
+									<div class="col-md-6">
+										<button class="btn btn-danger" id="printDiv" > <i class="mdi mdi-printer"></i>Imprimer</button>
+									</div>
+									<div class="col-md-6 text-right pull-right">
+										<a href="{{ path('facture_new') }}" class="btn btn-primary" ><i class="fa fa-reply"></i> Retour à la facturation</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="pull-up">
+			<div class="container" id="printableArea">
+				<div class="row"  >
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-5" style="border: #cccccc solid 1px">
+										<div class="row">
+											<div class="col-md-12">
+												<p class="text-center">
+													<strong>SUPERETTE EXPRESS</strong><br>
+													Faya Nouveau goudron <br>
+													Tel: +225 59 13 69 78
+												</p>
+											</div>
+										</div>
+										<div class="row mb-5">
+											<div class="col-md-6">Ticket No: <strong>{{ facture.reference }}</strong></div>
+											<div class="col-md-6">Date: <strong>{{ facture.publieLe|date('d/m/Y H:i:s') }}</strong></div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												{% for vente in ventes %}
+													<div class="row">
+														<div class="col-md-8" >{{ vente.produit.reference }} {{ vente.produit.libelle }}</div>
+														<div class="col-md-1 text-right">{{ vente.quantite }}</div>
+														<div class="col-md-3 text-right">{{ vente.montant|number_format(0,'',' ') }}</div>
+													</div>
+												{% endfor %}
+												<hr>
+												<div class="row">
+													<div class="col-md-9 text-right">Total :</div>
+													<div class="col-md-3 text-right"><strong>{{ facture.montant|number_format(0,'',' ') }}</strong></div>
+												</div>
+												<div class="row">
+													<div class="col-md-9 text-right">Verse :</div>
+													<div class="col-md-3 text-right"><strong>{{ facture.verse|number_format(0,'',' ') }}</strong></div>
+												</div>
+												<div class="row">
+													<div class="col-md-9 text-right">Monnaie :</div>
+													<div class="col-md-3 text-right"><strong>{{ facture.monnaie|number_format(0,'',' ') }}</strong></div>
+												</div>
+												<div class="row mt-5">
+													<div class="col-md-12 text-center">
+														<em>Nous vous remercions de nous avoir visités</em><br>
+														<em>NB: La superette est ouverte en permanence de O8h à 20h</em>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</section>
+</main>
+{% block body %}{% endblock %}
+
+{% block javascripts %}
+	<script src='{{ absolute_url(asset('ressources/assets/bundles/9556cd6744b0b19628598270bd385082cda6a269.js')) }}'></script>
+	<script src='{{ absolute_url(asset('ressources/assets/js/invoice-print.js'))}}'></script>
+{% endblock %}
+</body>
+</html>

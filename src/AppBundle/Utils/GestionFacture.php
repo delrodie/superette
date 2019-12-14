@@ -52,4 +52,14 @@ class GestionFacture
 
         return true;
     }
+
+    public function finalisation($id,$verse,$monnaie)
+    {
+        $facture = $this->em->getRepository("AppBundle:Facture")->findOneBy(['id'=>$id]);
+        $facture->setVerse($verse);
+        $facture->setMonnaie($monnaie);
+        $this->em->flush();
+
+        return true;
+    }
 }

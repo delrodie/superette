@@ -50,7 +50,7 @@ class VenteController extends Controller
             $em = $this->getDoctrine()->getManager();
             //recherche du produit concerne
             $produitReference = $request->get('produit');
-            $produit = $em->getRepository("AppBundle:Produit")->findByReferenceOrCode($produitReference);
+            $produit = $em->getRepository("AppBundle:Produit")->findByReferenceOrCode($produitReference); //dump($produit);die();
             if (!$produit){
                 $this->addFlash('error', "Attention ce produit n'existe pas");
                 return $this->redirectToRoute('vente_new',['facture'=>$facture]);

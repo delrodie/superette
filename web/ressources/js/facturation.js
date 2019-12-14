@@ -19,8 +19,20 @@ function calculMonnaie(total = null, verse = null) {
     return resultat;
 }
 
+/**
+ * calcul de la remise
+ */
+function calculRemise(total = null, remise = null) {
+    if (total){ montantTotal = existence(total);}else{montantTotal = 0;}
+    if (remise){ montantVerse = existence(remise);}else {montantVerse = 0;}
+    var reduction = total*remise*0.01; console.log(reduction);
+    var resultat = total - reduction;
+
+    return resultat;
+}
+
 // Traitement du formulaire selon la part assurance
-function verse(){
+function verses(){
     var verse = parseFloat(document.getElementById("facturation").elements["facturation_verse"].value.replace('%',''));
     var total = parseFloat(document.getElementById("facturation").elements["facturation_total"].value.replace('%',''));
 
@@ -29,7 +41,26 @@ function verse(){
 
 
     if (!isNaN(verse)) {
-        document.getElementById("facturation").elements["facturation_monnaie"].value = new Intl.NumberFormat("ci-CI").format(monnaieARendre);
+        document.getElementById("facturation").elements["facturation_monnaie"].value = monnaieARendre;
+        document.getElementById("montant_total").elements["total"].value = monnaieARendre;
+
+    }else{
+        alert("La remise saisie est incorrecte. Mettez uniquement des chiffres sans %")
+    }
+}
+
+function reductions() {
+    //var verse = parseFloat(document.getElementById("facturation").elements["facturation_verse"].value.replace('%',''));
+    var remise = parseFloat(document.getElementById("facturation").elements["facturation_reduction"].value.replace('%',''));
+    var total = parseFloat(document.getElementById("facturation").elements["interne"].value.replace('%',''));
+
+    // Calcul de la monnaie
+    var reduction = calculRemise(total,remise);
+
+
+    if (!isNaN(remise)) {
+        //document.getElementById("facturation").elements["facturation_monnaie"].value = new Intl.NumberFormat("ci-CI").format(monnaieARendre);
+        document.getElementById("facturation").elements["facturation_total"].value = reduction;
 
     }else{
         alert("La remise saisie est incorrecte. Mettez uniquement des chiffres sans %")

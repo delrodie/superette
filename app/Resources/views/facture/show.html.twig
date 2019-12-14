@@ -5,7 +5,7 @@
         <div class="bg-dark">
             <div class="container  m-b-30">
                 <div class="row">
-                    <div class="col-12 text-white p-t-40 p-b-90 text-right">
+                    <div class="col-12 text-white p-t-40 p-b-90 text-right" id="montant_total">
                         <h1 class="h1" style="font-size: 7em;" id="total">  {{ facture.montant|number_format(0,'','.')}}</h1>
                     </div>
                 </div>
@@ -83,28 +83,37 @@
                 <div class="col-lg-4">
                     <div class="card m-b-30">
                         <div class="card-body ">
-                            <form action="" id="facturation">
+                            <form action="{{ path('impression_facture', {'facture': facture.id}) }}" method="post" id="facturation">
+                                <div class="form-row">
+                                    <div class="col-12 form-group">
+                                        <label for="appbundle_facture_montant" style="color: #0e31fa"><em>Total</em></label>
+                                        <input type="text" class="form-control" name="facturation_total" value="{{ facture.montant }}" id="facturation_total" style="text-align:right; font-weight:bold;" readonly>
+                                    </div>
+                                </div>
                                 <div class="form-row">
                                     <div class="col-12 form-group">
                                         <label for="appbundle_facture_montant" style="color: #0e31fa"><em>Reduction</em></label>
-                                        <input type="text" class="form-control" name="reduction" id="reduction">
+                                        <input type="text" class="form-control" name="facturation_reduction" id="facturation_reduction" onfocusout="reductions()" autocomplete="off" style="text-align:right; font-weight:bold;">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-12 form-group">
                                         <label for="appbundle_facture_montant" style="color: #0e31fa"><em>Verse</em></label>
-                                        <input type="text" class="form-control" name="verse" id="facturation_verse" onkeyup="verse()" placeholder="Montant versé" style="color: blue; text-align: right; font-weight: bold">
+                                        <input type="text" class="form-control" name="verse" id="facturation_verse" onkeyup="verses()" placeholder="Montant versé" autocomplete="off" style="color: blue; text-align: right; font-weight: bold;">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-12 form-group">
                                         <label for="appbundle_facture_montant" style="color: #0e31fa"><em>Monnaie</em></label>
-                                        <input type="text" class="form-control" name="monnaie" id="facturation_monnaie" readonly>
+                                        <h3 class="h3">
+                                            <input type="text" class="form-control" name="monnaie" id="facturation_monnaie" style="color: red; text-align:right; font-weight:bold;" readonly>
+                                        </h3>
+
                                     </div>
                                 </div>
                                 <div class="form-group text-right">
-                                    <input type="text" name="total" id="facturation_total" value="{{ facture.montant }}">
-                                    <button class="btn btn-primary">Valider</button>
+                                    <input type="hidden" id="interne" value="{{ facture.montant }}">
+                                    <button type="submit" class="btn btn-primary">Valider</button>
                                 </div>
                             </form>
                         </div>
@@ -118,6 +127,7 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script src='{{ absolute_url(asset('ressources/assets/bundles/ba78fede76f682cd388ed2abbfd1e1568e76f8a4.js')) }}'></script>
     <script src="{{ asset('ressources/js/facturation.js') }}"></script>
+    <script src='{{ absolute_url(asset('ressources/assets/bundles/ba78fede76f682cd388ed2abbfd1e1568e76f8a4.js')) }}'></script>
+
 {% endblock %}

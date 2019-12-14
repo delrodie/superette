@@ -17,12 +17,16 @@ class ProduitRepository extends \Doctrine\ORM\EntityRepository
 
     public function findByReferenceOrCode($reference)
     {
-        return $this->createQueryBuilder('p')
+        $q = $this->createQueryBuilder('p')
                     ->where('p.reference = :reference')
                     ->orWhere('p.codebarre = :reference')
                     ->setParameter('reference', $reference)
-                    ->getQuery()->getSingleResult()
             ;
+        if ($q->getQuery()->getResult()){
+            return $q->getQuery()->getSingleResult();
+        }else{
+            return false;
+        }
             ;
     }
 }

@@ -70,12 +70,12 @@ class FactureController extends Controller
      * @Route("/{id}", name="facture_show")
      * @Method({"GET","POST"})
      */
-    public function showAction(Request $request, Facture $facture)
+    public function showAction(Request $request, Facture $facture, GestionFacture $gestionFacture)
     {
         $em = $this->getDoctrine()->getManager();
         $deleteForm = $this->createDeleteForm($facture);
-
         $ventes = $em->getRepository("AppBundle:Vente")->findBy(['facture'=>$facture->getId()]);
+
 
         return $this->render('facture/show.html.twig', array(
             'facture' => $facture,
