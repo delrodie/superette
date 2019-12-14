@@ -28,7 +28,7 @@ class ImpressionController extends Controller
 
         $gestionFacture->finalisation($facture->getId(),$verse,$monnaie);
 
-        return $this->render('etat/facture.html.twig',[
+        return $this->render('etat/facture2.html.twig',[
             'facture' => $facture,
             'ventes' => $ventes,
         ]);

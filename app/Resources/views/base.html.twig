@@ -67,6 +67,14 @@
                     </span>
                         </a>
                     </li>
+                    <li class="menu-item">
+                        <a href='{{ path('liste_produit') }}' class=' menu-link'>
+                            <span class="menu-label">
+                                <span class="menu-name">Produit</span>
+                            </span>
+                            <span class="menu-icon"><i class="icon-placeholder fa fa-cube"></i></span>
+                        </a>
+                    </li>
                 {% endif %}
                 {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <li class="menu-item ">
