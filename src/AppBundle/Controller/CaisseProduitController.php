@@ -24,4 +24,17 @@ class CaisseProduitController extends Controller
             'produits' => $produits,
         ]);
     }
+
+    /**
+     * @Route("/caisse", name="caisse_jour")
+     */
+    public function caisseAction()
+    {
+        $em =$this->getDoctrine()->getManager();
+        $factures = $em->getRepository("AppBundle:Facture")->findAll();
+
+        return $this->render("produit/facture_list.html.twig",[
+            'factures' => $factures
+        ]);
+    }
 }
