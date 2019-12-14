@@ -61,43 +61,43 @@
 						<div class="card">
 							<div class="card-body">
 								<div class="row">
-									<div class="col-md-5" style="border: #cccccc solid 1px">
-										<div class="row">
+									<div class="col-md-12" style="border: #cccccc solid 1px">
+										<div class="row mb-5">
 											<div class="col-md-12">
-												<p class="text-center">
+												<p class="text-center h1 mb-2">
 													<strong>SUPERETTE EXPRESS</strong><br>
 													Faya Nouveau goudron <br>
 													Tel: +225 59 13 69 78
 												</p>
 											</div>
 										</div>
-										<div class="row mb-5">
-											<div class="col-md-6">Ticket No: <strong>{{ facture.reference }}</strong></div>
-											<div class="col-md-6">Date: <strong>{{ facture.publieLe|date('d/m/Y H:i:s') }}</strong></div>
+										<div class="row mb-5 mt-5">
+											<div class="col-md-6 h1">Ticket No: <strong>{{ facture.reference }}</strong></div>
+											<div class="col-md-6 h1">Date: <strong>{{ facture.publieLe|date('d/m/Y H:i:s') }}</strong></div>
 										</div>
 										<div class="row">
 											<div class="col-md-12">
 												{% for vente in ventes %}
-													<div class="row">
+													<div class="row h1">
 														<div class="col-md-8" >{{ vente.produit.reference }} {{ vente.produit.libelle }}</div>
 														<div class="col-md-1 text-right">{{ vente.quantite }}</div>
 														<div class="col-md-3 text-right">{{ vente.montant|number_format(0,'',' ') }}</div>
 													</div>
 												{% endfor %}
 												<hr>
-												<div class="row">
+												<div class="row h1">
 													<div class="col-md-9 text-right">Total :</div>
 													<div class="col-md-3 text-right"><strong>{{ facture.montant|number_format(0,'',' ') }}</strong></div>
 												</div>
-												<div class="row">
+												<div class="row h1">
 													<div class="col-md-9 text-right">Verse :</div>
 													<div class="col-md-3 text-right"><strong>{{ facture.verse|number_format(0,'',' ') }}</strong></div>
 												</div>
-												<div class="row">
+												<div class="row h1">
 													<div class="col-md-9 text-right">Monnaie :</div>
 													<div class="col-md-3 text-right"><strong>{{ facture.monnaie|number_format(0,'',' ') }}</strong></div>
 												</div>
-												<div class="row mt-5">
+												<div class="row mt-5 h1">
 													<div class="col-md-12 text-center">
 														<em>Nous vous remercions de nous avoir visités</em><br>
 														<em>NB: La superette est ouverte en permanence de O8h à 20h</em>
