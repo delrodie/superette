@@ -61,10 +61,10 @@
 						<div class="card">
 							<div class="card-body">
 								<div class="row">
-									<div class="col-md-12" style="border: #cccccc solid 1px">
+									<div class="col-md-12">
 										<div class="row mb-5">
 											<div class="col-md-12">
-												<p class="text-center h1 mb-2">
+												<p class="text-center mb-2">
 													<strong>SUPERETTE EXPRESS</strong><br>
 													Faya Nouveau goudron <br>
 													Tel: +225 59 13 69 78
@@ -73,8 +73,8 @@
 										</div>
 										<table class="table">
 											<tr>
-												<td class="h1">Ticket No: <strong>{{ facture.reference }}</strong></td>
-												<td class="h1 text-right">Date: <strong>{{ facture.publieLe|date('d/m/Y H:i:s') }}</strong></td>
+												<td class="">Ticket No: <strong>{{ facture.reference }}</strong></td>
+												<td class="text-right">Date: <strong>{{ facture.publieLe|date('d/m/Y H:i:s') }}</strong></td>
 											</tr>
 										</table>
 										<table width="100%">
@@ -83,7 +83,7 @@
 												<td class="mt-5 mb-5" colspan="3">.</td>
 											</tr>
 											{% for vente in ventes %}
-												<tr class="h1">
+												<tr class="">
 													<td>{{ vente.produit.reference }} {{ vente.produit.libelle }}</td>
 													<td class="text-right">{{ vente.quantite }}</td>
 													<td class="text-right">{{ vente.montant|number_format(0,'',' ') }}</td>
@@ -94,22 +94,22 @@
 													<hr>
 												</td>
 											</tr>
-											<tr class="h1 mt-5">
+											<tr class="mt-5">
 												<td colspan="2" class="text-right">Total:</td>
 												<td class="text-right"><strong>{{ facture.montant|number_format(0,'',' ') }}</strong></td>
 											</tr>
-											<tr class="h1 mt-5">
+											<tr class="mt-5">
 												<td colspan="2" class="text-right">Verse:</td>
 												<td class="text-right"><strong>{{ facture.verse|number_format(0,'',' ') }}</strong></td>
 											</tr>
-											<tr class="h1 mt-5">
+											<tr class="mt-5">
 												<td colspan="2" class="text-right">Monnaie:</td>
 												<td class="text-right"><strong>{{ facture.monnaie|number_format(0,'',' ') }}</strong></td>
 											</tr>
 										</table>
 										<div class="row">
 											<div class="col-md-12">
-												<div class="row mt-5 h1">
+												<div class="row mt-5">
 													<div class="col-md-12 text-center">
 														<em>Nous vous remercions de nous avoir visités</em><br>
 														<em>NB: La superette est ouverte en permanence de O8h à 20h</em>
