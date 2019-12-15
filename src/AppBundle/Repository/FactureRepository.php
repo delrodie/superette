@@ -25,4 +25,43 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
                     ->setParameter('reference', $reference)
             ;
     }
+
+    public function findByPeriode($debut=null, $fin=null)
+    {
+        if ($debut && $fin){
+            return $this->createQueryBuilder('f')
+                        ->where('f.date >= :debut')
+                        ->andWhere('f.date <= :fin')
+                        ->andWhere('f.montant <> 0')
+                        ->andWhere('f.statut IS NULL')
+                        ->orderBy('f.publieLe', 'DESC')
+                        ->setParameters([
+                            'debut' => $debut,
+                            'fin' => $fin
+                        ])
+                        ->getQuery()->getResult()
+                ;
+        }elseif ($debut){
+            return $this->createQueryBuilder('f')
+                        ->where('f.date >= :debut')
+                        ->andWhere('f.montant <> 0')
+                        ->andWhere('f.statut IS NULL')
+                        ->orderBy('f.publieLe', 'DESC')
+                        ->setParameter('debut', $debut)
+                        ->getQuery()->getResult()
+                ;
+        }elseif ($fin){
+            return $this->createQueryBuilder('f')
+                        ->where('f.date <= :fin')
+                        ->andWhere('f.montant <> 0')
+                        ->andWhere('f.statut IS NULL')
+                        ->orderBy('f.publieLe', 'DESC')
+                        ->setParameter('fin', $fin)
+                        ->getQuery()->getResult()
+                ;
+        }else{
+            return $this->createQueryBuilder('f')->where('f.montant <> 0')
+                ->andWhere('f.statut IS NULL')->orderBy('f.publieLe','DESC')->getQuery()->getResult();
+        }
+    }
 }

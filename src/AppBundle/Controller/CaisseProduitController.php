@@ -2,9 +2,11 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Facture;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class CaisseProduitController
@@ -27,14 +29,42 @@ class CaisseProduitController extends Controller
 
     /**
      * @Route("/caisse", name="caisse_jour")
+     * @Method({"GET","POST"})
      */
-    public function caisseAction()
+    public function caisseAction(Request $request)
     {
         $em =$this->getDoctrine()->getManager();
-        $factures = $em->getRepository("AppBundle:Facture")->findAll();
+        $date_debut = null; $date_fin = null;
+        $debut = $request->get('date_debut');
+        $fin = $request->get('date_fin');
+        if ($debut){
+            $date1 = explode('/',$debut);
+            $date_debut = $date1[2].'-'.$date1[0].'-'.$date1[1];
+        }
+        if ($fin){
+            $date2 = explode('/',$fin);
+            $date_fin = $date2[2].'-'.$date2[0].'-'.$date2[1];
+        }
+
+        $factures = $em->getRepository("AppBundle:Facture")->findByPeriode($date_debut,$date_fin);
+        //dump($factures);die();
 
         return $this->render("produit/facture_list.html.twig",[
-            'factures' => $factures
+            'factures' => $factures,
+            'debut' => $date_debut,
+            'fin' => $date_fin,
         ]);
+    }
+
+    /**
+     * @Route("/caisse/{id}", name="caisse_facture_delete")
+     */
+    public function deleteFactureAction(Request $request, Facture $facture)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $facture->setStatut(true);
+        $em->flush();
+
+        return $this->redirectToRoute('caisse_jour');
     }
 }

@@ -57,14 +57,29 @@
                                     </div>
                                 </div>
                             {% endfor %}
+                            <form action="{{ path('caisse_jour') }}">
+                                <div class="row mb-5">
+                                    <div class="col-md-4">
+                                        <input type="text" class="js-datepicker form-control" name="date_debut" autocomplete="off">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" class="js-datepicker form-control" name="date_fin" autocomplete="off">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-primary">Valider</button>
+                                    </div>
+                                </div>
+                            </form>
                             <div class="table-responsive p-t-10">
                                 <table id="example" class="table   " style="width:100%">
                                     <thead>
                                     <tr>
                                         <td>ID</td>
-                                        <td>Ref.</td>
+                                        <td>Heure</td>
+                                        <td>Reference</td>
                                         <td>montant</td>
                                         <td>Nombre de produit</td>
+                                        <td></td>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -73,9 +88,15 @@
                                         {% set total = total + facture.montant %}
                                             <tr class="text-danger">
                                                 <td>{{ loop.index }}
+                                                <td>{{ facture.publieLe|date('H:i:s') }}
                                                 <td>{{ facture.reference }}
                                                 <td>{{ facture.montant }}</td>
                                                 <td>{{ facture.nombreProduit }}</td>
+                                                <td>
+                                                    <a href="{{ path('caisse_facture_delete', {'id': facture.id}) }}" onclick='return confirm("Êtes-vous sur de vouloir supprimer cette facture? Notez que cette action est irreversible.");'>
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                </td>
                                             </tr>
                                     {% endfor %}
                                     </tbody>

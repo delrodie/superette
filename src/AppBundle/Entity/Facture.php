@@ -79,6 +79,13 @@ class Facture
     private $promotion;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="statut", type="boolean", nullable=true)
+     */
+    private $statut;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
@@ -484,5 +491,29 @@ class Facture
     public function getReference()
     {
         return $this->reference;
+    }
+
+    /**
+     * Set statut
+     *
+     * @param boolean $statut
+     *
+     * @return Facture
+     */
+    public function setStatut($statut)
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
+    /**
+     * Get statut
+     *
+     * @return boolean
+     */
+    public function getStatut()
+    {
+        return $this->statut;
     }
 }
