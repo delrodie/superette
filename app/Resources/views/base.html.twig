@@ -149,7 +149,38 @@
                         </a>
                     </li>
                 {% endif %}
-                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="menu-item ">
+                        <a href="#" class="open-dropdown menu-link">
+                            <span class="menu-label">
+                                <span class="menu-name">Etats
+                                    <span class="menu-arrow"></span>
+                                </span>
+                            </span>
+                            <span class="menu-icon">
+                                <i class="icon-placeholder fa fa-file"></i>
+                            </span>
+                        </a>
+                        <!--submenu-->
+                        <ul class="sub-menu">
+                            <li class="menu-item">
+                                <a href="{{ path('etat_produit_liste') }}" class=' menu-link'>
+                                    <span class="menu-label">
+                                        <span class="menu-name">Liste des produits</span>
+                                    </span>
+                                    <span class="menu-icon"><i class="icon-placeholder fa fa-cubes"></i></span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{ path('etat_produit_liste') }}" class=' menu-link'>
+                                    <span class="menu-label">
+                                        <span class="menu-name">Liste des inventaires</span>
+                                    </span>
+                                    <span class="menu-icon"><i class="icon-placeholder fa fa-cubes"></i></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="menu-item ">
                         <a href="#" class="open-dropdown menu-link">
                     <span class="menu-label">
