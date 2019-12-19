@@ -1,0 +1,37 @@
+<div class="col-md-4 table-responsive p-t-10">
+	<table class="" style="width:100%">
+		<thead>
+		<tr>
+			<td>ID</td>
+			<td>Produits</td>
+			<td class="text-right">P.U.</td>
+			<td class="text-center">Qte</td>
+			<td class="text-right">Montants</td>
+		</tr>
+		</thead>
+		<tbody>
+		{% set pu = 0 %}
+		{% for vente in ventes %}
+			<tr>
+				<td>{{ loop.index }}
+				<td>{{ vente.produit.categorie.libelle }} {{ vente.produit.libelle }}</td>
+				<td class="text-right">{{ vente.produit.prixVente }}</td>
+				<td class="text-center">{{ vente.quantite }}</td>
+				<td class="text-right">{{ (vente.quantite * vente.produit.prixVente)|number_format(0,'','.') }}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+		<hr>
+		<tfoot>
+		<tr>
+			<td colspan="5">
+				<hr>
+			</td>
+		</tr>
+		<tr class="mt-5">
+			<td colspan="3" class="text-right">Total:</td>
+			<td colspan="2" class="text-right"><strong>{{ facture.montant|number_format(0,'','.') }}</strong></td>
+		</tr>
+		</tfoot>
+	</table>
+</div>

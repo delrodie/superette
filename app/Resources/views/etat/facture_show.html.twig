@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport">
+	<title>{% block title %}GESTOCK :: LISTE DES FACTURES{% endblock %}</title>
+	{% block stylesheets %}
+		<link rel='stylesheet' href='{{ absolute_url(asset('ressources/assets/css/pace.css'))}}'/>
+		<script src='{{ absolute_url(asset('ressources/assets/js/pace.min.js'))}}'></script>
+		<link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/bundles/291bbeead57f19651f311362abe809b67adc3fb5.css')) }}'/>
+		<link rel='stylesheet' href='{{ absolute_url(asset('ressources/assets/bundles/30bc673ce76f73ecf02568498f6b139269f6e4c7.css')) }}'/>
+		<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,600" rel="stylesheet">
+		<link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/css/materialdesignicons.min.css'))}}'/>
+		<link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/css/feather-icons.css'))}}'/>
+		<link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/css/atmos.min.css'))}}'/>
+		<link rel="stylesheet" href="{{ absolute_url(asset('ressources/vendor/fontawesome/css/all.min.css')) }}">
+	{% endblock %}
+	<link rel="icon" type="image/x-icon" href="{{ absolute_url(asset('ressources/img/favicon.ico')) }}"/>
+	<link rel="icon" href="{{ absolute_url(asset('ressources/img/favico.ico')) }}" type="image/png" sizes="16x16">
+</head>
+<body class="sidebar-pinned ">
+<aside class="admin-sidebar">
+	<div class="admin-sidebar-brand">
+		<img class="admin-brand-logo" src="{{ absolute_url(asset('ressources/img/icon-01.png')) }}" width="60" alt="atmos Logo">
+		<div class="ml-auto">
+			<a href="#" class="admin-pin-sidebar btn-ghost btn btn-rounded-circle"></a>
+			<a href="#" class="admin-close-sidebar"></a>
+		</div>
+	</div>
+	<div class="admin-sidebar-wrapper js-scrollbar">
+		<ul class="menu">
+			<li class="menu-item active ">
+				<a href="#" class="open-dropdown menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">Tableau de bord
+                            <span class="menu-arrow"></span>
+                        </span>
+                    </span>
+					<span class="menu-icon">
+                        <i class="icon-placeholder fa fa-chart-line "></i>
+                    </span>
+				</a>
+				<!--submenu-->
+				<ul class="sub-menu">
+
+					{% if is_granted('ROLE_ADMIN') %}
+						<li class="menu-item ">
+							<a href='{{ path('caisse_jour') }}' class=' menu-link'>
+                            <span class="menu-label">
+                                <span class="menu-name">Statistique caisse</span>
+                            </span>
+								<span class="menu-icon">
+                                <i class="icon-placeholder fe fe-activity"></i>
+                            </span>
+							</a>
+						</li>
+					{% endif %}
+
+				</ul>
+			</li>
+			{% if is_granted('ROLE_ADMIN') %}
+				<li class="menu-item ">
+					<a href="#" class="open-dropdown menu-link">
+                            <span class="menu-label">
+                                <span class="menu-name">Etats
+                                    <span class="menu-arrow"></span>
+                                </span>
+                            </span>
+						<span class="menu-icon">
+                                <i class="icon-placeholder fa fa-file"></i>
+                            </span>
+					</a>
+					<!--submenu-->
+					<ul class="sub-menu">
+						<li class="menu-item">
+							<a href="{{ path('etat_produit_liste') }}" class=' menu-link'>
+                                    <span class="menu-label">
+                                        <span class="menu-name">Liste des produits</span>
+                                    </span>
+								<span class="menu-icon"><i class="icon-placeholder fa fa-cubes"></i></span>
+							</a>
+						</li>
+					</ul>
+				</li>
+			{% endif %}
+		</ul>
+	</div>
+
+</aside>
+<main class="admin-main">
+	<section class="admin-content ">
+		<div class="bg-dark m-b-30">
+			<div class="container">
+				<div class="row p-b-60 p-t-60">
+					<div class="col-md-12 text-white p-b-30">
+						<div class="media">
+							<div class="media-body">
+								<div class="row">
+									<div class="col-md-6">
+										<button class="btn btn-danger" id="printDiv" > <i class="mdi mdi-printer"></i>Imprimer</button>
+									</div>
+									<div class="col-md-6 text-right pull-right">
+										<a href="{{ path('homepage') }}" class="btn btn-primary" ><i class="fa fa-reply"></i> Retour aux statistiques</a>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-2"></div>
+									<div class="col-md-8">
+										<form action="{{ path('caisse_jour') }}">
+											<div class="row mt-5">
+												<div class="col-md-3">
+													<select name="caissier" id="caissier" class="form-control">
+														<option value=""></option>
+														{% for caissier in caissiers %}
+															<option value="{{ caissier.username }}">{{ caissier.username }}</option>
+														{% endfor %}
+													</select>
+												</div>
+												<div class="col-md-3">
+													<input type="text" class="js-datepicker form-control" name="date_debut" autocomplete="off">
+												</div>
+												<div class="col-md-3">
+													<input type="text" class="js-datepicker form-control" name="date_fin" autocomplete="off">
+												</div>
+												<div class="col-md-2">
+													<button class="btn btn-primary">Valider</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="pull-up">
+			<div class="container" id="printableArea">
+				<div class="row"  >
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12" style="border: #cccccc solid 1px">
+										<div class="row mb-5">
+											<div class="col-md-12">
+												<p class="text-center h4 mb-2">
+													<strong>LISTE DES FACTURES</strong><br>
+												</p>
+												<div class="row">
+													<div class="col-md-6">
+														Caissière: <strong>{{ caissier }}</strong>
+													</div>
+													<div class="col-md-6 text-right">
+														Periode: du <strong>{{ debut|date('d-m-Y') }}</strong> au  <strong>{{ fin|date('d-m-Y') }}</strong>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-12 text-center">
+														{% set total = 0 %}
+														{% for facture in factures %}
+															{% set total = total + facture.montant %}
+														{% endfor %}
+														Recette: <span class="h3"><strong>{{ total|number_format(0,'','.') }}</strong> FCFA</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												{% for facture in factures %}
+													{{ render(url('etat_caisse_vente',{'id':facture.id})) }}
+												{% endfor %}
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</section>
+</main>
+{% block body %}{% endblock %}
+
+{% block javascripts %}
+	<script src='{{ absolute_url(asset('ressources/assets/bundles/9556cd6744b0b19628598270bd385082cda6a269.js')) }}'></script>
+	<script src='{{ absolute_url(asset('ressources/assets/js/invoice-print.js'))}}'></script>
+{% endblock %}
+</body>
+</html>
