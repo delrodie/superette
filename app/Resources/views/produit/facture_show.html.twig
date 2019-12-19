@@ -37,7 +37,7 @@
 
         <div class="container  pull-up">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-7">
 
                     <div class="card m-b-30">
                         <div class="card-header">
@@ -103,7 +103,7 @@
                                         <td>Heure</td>
                                         <td>Reference</td>
                                         <td>montant</td>
-                                        <td>Nombre de produit</td>
+                                        <td>Nombre</td>
                                         <td></td>
                                     </tr>
                                     </thead>
@@ -111,21 +111,21 @@
                                     {% set total = 0 %}
                                     {% for facture in factures if facture.montant is not null %}
                                         {% set total = total + facture.montant %}
-                                            <tr class="text-danger">
-                                                <td>{{ loop.index }}
-                                                <td>{{ facture.publieLe|date('H:i:s') }}
-                                                <td>{{ facture.reference }}
-                                                <td>{{ facture.montant }}</td>
-                                                <td>{{ facture.nombreProduit }}</td>
-                                                <td>
-                                                    <a href="{{ path('caisse_facture_show', {'id': facture.id}) }}">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a> |
-                                                    <a href="{{ path('caisse_facture_delete', {'id': facture.id}) }}" onclick='return confirm("Êtes-vous sur de vouloir supprimer cette facture? Notez que cette action est irreversible.");'>
-                                                        <i class="fa fa-trash"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                        <tr class="text-danger">
+                                            <td>{{ loop.index }}
+                                            <td>{{ facture.publieLe|date('H:i:s') }}
+                                            <td>{{ facture.reference }}
+                                            <td>{{ facture.montant }}</td>
+                                            <td>{{ facture.nombreProduit }}</td>
+                                            <td>
+                                                <a href="{{ path('caisse_facture_show', {'id': facture.id}) }}">
+                                                    <i class="fa fa-eye"></i>
+                                                </a> |
+                                                <a href="{{ path('caisse_facture_delete', {'id': facture.id}) }}" onclick='return confirm("Êtes-vous sur de vouloir supprimer cette facture? Notez que cette action est irreversible.");'>
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                     {% endfor %}
                                     </tbody>
                                 </table>
@@ -133,8 +133,60 @@
                         </div>
                     </div>
                     <!--widget card ends-->
-
-
+                </div>
+                <div class="col-lg-5">
+                    <div class="card m-b-30">
+                        <div class="card-header">
+                            <h5>Facture N°: {{ facture.reference }}</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    Caisse: <strong>{{ facture.publiePar|title }}</strong>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    Date: <strong>{{ facture.date|date('d-m-Y') }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive p-t-10">
+                                <table class="" style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>Produits</td>
+                                        <td class="text-right">P.U.</td>
+                                        <td class="text-center">Qte</td>
+                                        <td class="text-right">Montants</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% set pu = 0 %}
+                                    {% for vente in ventes %}
+                                        <tr>
+                                            <td>{{ loop.index }}
+                                            <td>{{ vente.produit.categorie.libelle }} {{ vente.produit.libelle }}</td>
+                                            <td class="text-right">{{ vente.produit.prixVente }}</td>
+                                            <td class="text-center">{{ vente.quantite }}</td>
+                                            <td class="text-right">{{ (vente.quantite * vente.produit.prixVente)|number_format(0,'','.') }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                    <hr>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5">
+                                                <hr>
+                                            </td>
+                                        </tr>
+                                        <tr class="mt-5">
+                                            <td colspan="3" class="text-right">Total:</td>
+                                            <td colspan="2" class="text-right"><strong>{{ facture.montant|number_format(0,'','.') }}</strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

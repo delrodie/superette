@@ -34,7 +34,12 @@ class ProduitController extends Controller
             $em = $this->getDoctrine()->getManager();
             // Verification d'existence du produit
             $verif = $em->getRepository("AppBundle:Produit")->findOneBy(['libelle'=>$produit->getLibelle()]);
+            $verifCodeBarre = $em->getRepository("AppBundle:Produit")->findByCodeBarre($produit->getCodebarre());
             if ($verif){
+                $this->addFlash('error', "Ce produit existe déja dans le système");
+                return $this->redirectToRoute('produit_index');
+            }
+            if ($verifCodeBarre){
                 $this->addFlash('error', "Ce produit existe déja dans le système");
                 return $this->redirectToRoute('produit_index');
             }

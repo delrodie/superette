@@ -27,6 +27,17 @@ class ProduitRepository extends \Doctrine\ORM\EntityRepository
         }else{
             return false;
         }
-            ;
+    }
+
+    public function findByCodeBarre($codeBarre = null)
+    {
+        if ($codeBarre){
+            return $this->createQueryBuilder('p')
+                        ->where('p.codebarre = :code')
+                        ->setParameter('code', $codeBarre)
+                        ->getQuery()->getResult();
+        }else{
+            return false;
+        }
     }
 }

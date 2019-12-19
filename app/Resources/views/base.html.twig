@@ -77,16 +77,14 @@
                             <span class="menu-icon"><i class="icon-placeholder fa fa-cube"></i></span>
                         </a>
                     </li>
-                {% endif %}
-                {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <li class="menu-item ">
-                        <a href="#" class="menu-link">
-                    <span class="menu-label">
-                        <span class="menu-name">Caisse</span>
-                    </span>
+                        <a href="{{ path('caissier_index') }}" class="menu-link">
+                            <span class="menu-label">
+                                <span class="menu-name">Caisse</span>
+                            </span>
                             <span class="menu-icon">
-                        <i class="icon-placeholder fa fa-wallet"></i>
-                    </span>
+                                <i class="icon-placeholder fa fa-wallet"></i>
+                            </span>
                         </a>
                     </li>
                 {% endif %}

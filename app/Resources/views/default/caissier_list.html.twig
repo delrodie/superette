@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{ parent() }} Gestion des produits{% endblock %}
+{% block title %}{{ parent() }} Gestion des transaction{% endblock %}
 {% block body %}
     <section class="admin-content">
         <div class="bg-dark">
@@ -7,29 +7,7 @@
                 <div class="row">
                     <div class="col-12 text-white p-t-40 p-b-90">
 
-                        {% set total = 0 %}
-                        {% for facture in factures %}
-                            {% set total = total + facture.montant %}
-                        {% endfor %}
-                        <h1 class="h1">
-                            <div class="row">
-                                <div class="col-md-8 text-left">
-                                    {% if caissier %}
-                                        {{caissier|title}}
-                                    {% endif %}
-                                    {% if debut %}
-                                        <span style="font-size: 0.6em;">du {{ debut }}</span>
-                                    {% endif %}
-                                    {% if fin %}
-                                      <span style="font-size: 0.6em;">au {{ fin }}</span>
-                                    {% endif %}
-                                </div>
-                                <div class="col-md-4 text-right">
-                                    {{ total|number_format(0,'','.') }}
-                                </div>
-                            </div>
-
-                        </h1>
+                        <h1 class="h1">Les ventes d'aujourd'hui</h1>
                     </div>
                 </div>
             </div>
@@ -74,27 +52,6 @@
                                     </div>
                                 </div>
                             {% endfor %}
-                            <form action="{{ path('caisse_jour') }}">
-                                <div class="row mb-5">
-                                    <div class="col-md-3">
-                                        <select name="caissier" id="caissier" class="form-control">
-                                            <option value=""></option>
-                                            {% for caissier in caissiers %}
-                                                <option value="{{ caissier.username }}">{{ caissier.username }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="js-datepicker form-control" name="date_debut" autocomplete="off">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="js-datepicker form-control" name="date_fin" autocomplete="off">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button class="btn btn-primary">Valider</button>
-                                    </div>
-                                </div>
-                            </form>
                             <div class="table-responsive p-t-10">
                                 <table id="example" class="table   " style="width:100%">
                                     <thead>
@@ -118,11 +75,8 @@
                                                 <td>{{ facture.montant }}</td>
                                                 <td>{{ facture.nombreProduit }}</td>
                                                 <td>
-                                                    <a href="{{ path('caisse_facture_show', {'id': facture.id}) }}">
+                                                    <a href="{{ path('caissier_show', {'id': facture.id}) }}">
                                                         <i class="fa fa-eye"></i>
-                                                    </a> |
-                                                    <a href="{{ path('caisse_facture_delete', {'id': facture.id}) }}" onclick='return confirm("Êtes-vous sur de vouloir supprimer cette facture? Notez que cette action est irreversible.");'>
-                                                        <i class="fa fa-trash"></i>
                                                     </a>
                                                 </td>
                                             </tr>

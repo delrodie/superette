@@ -71,4 +71,28 @@ class CaisseProduitController extends Controller
 
         return $this->redirectToRoute('caisse_jour');
     }
+
+    /**
+     * @Route("/caisse/{id}/", name="caisse_facture_show")
+     * @Route("GET")
+     */
+    public function showFactureAction(Request $request, Facture $facture)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $factures = $em->getRepository("AppBundle:Facture")->findByPeriode($facture->getDate(),$facture->getDate());
+        $caissiers = $em->getRepository("AppBundle:User")->findUsers();
+        $ventes = $em->getRepository("AppBundle:Vente")->findBy(['facture'=>$facture->getId()]);
+
+
+        return $this->render("produit/facture_show.html.twig",[
+            'factures' => $factures,
+            'debut' => $facture->getDate(),
+            'fin' => $facture->getDate(),
+            'caissiers' => $caissiers,
+            'caissier' => $facture->getPubliePar(),
+            'ventes' => $ventes,
+            'facture' => $facture,
+        ]);
+    }
 }

@@ -61,7 +61,7 @@ class GestionProduit
         $dernierCode = $this->em->getRepository("AppBundle:Produit")->findOneBy(['categorie'=>$categorie],['id'=>'DESC']);
         //dump($dernierCode);die();
         if ($dernierCode){
-            $reference = $dernierCode->getReference()+1;
+            $reference = $dernierCode->getReference()+1; //dump($reference);die();
         }else{
             $categorieCode = $this->em->getRepository("AppBundle:Categorie")->findOneBy(['id'=>$categorie])->getCode();
             $reference = $categorieCode.'001';
