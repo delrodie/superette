@@ -22,7 +22,7 @@ class ProduitType extends AbstractType
             ->add('libelle', TextType::class,['attr'=>['class'=>'form-control', 'autocomplete'=>"off", 'placeholder'=>"Nom"]])
             ->add('prixAchat', TextType::class,['attr'=>['class'=>'form-control', 'autocomplete'=>"off", 'placeholder'=>"Prix d'achat"], 'required'=>false])
             ->add('prixVente', TextType::class,['attr'=>['class'=>'form-control', 'autocomplete'=>"off", 'placeholder'=>"Prix de vente"], 'required'=>false])
-            //->add('stock')
+            ->add('stock', TextType::class,['attr'=>['class'=>'form-control', 'autocomplete'=>"off", 'placeholder'=>"Stock"], 'required'=>false])
             ->add('seuil', TextType::class,['attr'=>['class'=>'form-control', 'autocomplete'=>"off", 'placeholder'=>"Seuil d'approvisionnement"], 'required'=>false])
             //->add('slug')->add('publiePar')->add('modifiePar')->add('publieLe')->add('modifieLe')
             ->add('categorie', EntityType::class,[
