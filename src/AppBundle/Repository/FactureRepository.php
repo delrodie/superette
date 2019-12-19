@@ -26,38 +26,88 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
             ;
     }
 
-    public function findByPeriode($debut=null, $fin=null)
+    public function findByPeriode($debut=null, $fin=null,$caissier=null)
     {
-        if ($debut && $fin){
+        if ($debut && $fin && $caissier){
             return $this->createQueryBuilder('f')
                         ->where('f.date >= :debut')
                         ->andWhere('f.date <= :fin')
                         ->andWhere('f.montant <> 0')
                         ->andWhere('f.statut IS NULL')
+                        ->andWhere('f.publiePar = :caissier')
                         ->orderBy('f.publieLe', 'DESC')
                         ->setParameters([
                             'debut' => $debut,
-                            'fin' => $fin
+                            'fin' => $fin,
+                            'caissier' => $caissier
+                        ])
+                        ->getQuery()->getResult()
+                ;
+        }elseif ($debut && $fin){
+            return $this->createQueryBuilder('f')
+                ->where('f.date >= :debut')
+                ->andWhere('f.date <= :fin')
+                ->andWhere('f.montant <> 0')
+                ->andWhere('f.statut IS NULL')
+                ->orderBy('f.publieLe', 'DESC')
+                ->setParameters([
+                    'debut' => $debut,
+                    'fin' => $fin,
+                ])
+                ->getQuery()->getResult()
+                ;
+        }elseif ($debut && $caissier){
+            return $this->createQueryBuilder('f')
+                        ->where('f.date >= :debut')
+                        ->andWhere('f.montant <> 0')
+                        ->andWhere('f.statut IS NULL')
+                        ->andWhere('f.publiePar = :caissier')
+                        ->orderBy('f.publieLe', 'DESC')
+                        ->setParameters([
+                            'debut'=> $debut,
+                            'caissier'=>$caissier
+                        ])
+                        ->getQuery()->getResult()
+                ;
+        }elseif ($fin && $caissier){
+            return $this->createQueryBuilder('f')
+                        ->where('f.date <= :fin')
+                        ->andWhere('f.montant <> 0')
+                        ->andWhere('f.statut IS NULL')
+                        ->andWhere('f.publiePar = :caissier')
+                        ->orderBy('f.publieLe', 'DESC')
+                        ->setParameters([
+                            'fin'=> $fin,
+                            'caissier' => $caissier,
                         ])
                         ->getQuery()->getResult()
                 ;
         }elseif ($debut){
             return $this->createQueryBuilder('f')
-                        ->where('f.date >= :debut')
-                        ->andWhere('f.montant <> 0')
-                        ->andWhere('f.statut IS NULL')
-                        ->orderBy('f.publieLe', 'DESC')
-                        ->setParameter('debut', $debut)
-                        ->getQuery()->getResult()
+                ->where('f.date >= :debut')
+                ->andWhere('f.montant <> 0')
+                ->andWhere('f.statut IS NULL')
+                ->orderBy('f.publieLe', 'DESC')
+                ->setParameter('debut', $debut)
+                ->getQuery()->getResult()
                 ;
         }elseif ($fin){
             return $this->createQueryBuilder('f')
-                        ->where('f.date <= :fin')
-                        ->andWhere('f.montant <> 0')
-                        ->andWhere('f.statut IS NULL')
-                        ->orderBy('f.publieLe', 'DESC')
-                        ->setParameter('fin', $fin)
-                        ->getQuery()->getResult()
+                ->where('f.date <= :fin')
+                ->andWhere('f.montant <> 0')
+                ->andWhere('f.statut IS NULL')
+                ->orderBy('f.publieLe', 'DESC')
+                ->setParameter('fin', $fin)
+                ->getQuery()->getResult()
+                ;
+        }elseif ($caissier){
+            return $this->createQueryBuilder('f')
+                ->where('f.publiePar = :caissier')
+                ->andWhere('f.montant <> 0')
+                ->andWhere('f.statut IS NULL')
+                ->orderBy('f.publieLe', 'DESC')
+                ->setParameter('caissier', $caissier)
+                ->getQuery()->getResult()
                 ;
         }else{
             return $this->createQueryBuilder('f')->where('f.montant <> 0')

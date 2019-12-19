@@ -6,12 +6,29 @@
             <div class="container  m-b-30">
                 <div class="row">
                     <div class="col-12 text-white p-t-40 p-b-90">
+
                         {% set total = 0 %}
                         {% for facture in factures %}
                             {% set total = total + facture.montant %}
                         {% endfor %}
-                        <h1 class="h1 text-right">
-                            {{ total|number_format(0,'','.') }}
+                        <h1 class="h1">
+                            <div class="row">
+                                <div class="col-md-8 text-left">
+                                    {% if caissier %}
+                                        {{caissier|title}}
+                                    {% endif %}
+                                    {% if debut %}
+                                        <span style="font-size: 0.6em;">du {{ debut }}</span>
+                                    {% endif %}
+                                    {% if fin %}
+                                      <span style="font-size: 0.6em;">au {{ fin }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    {{ total|number_format(0,'','.') }}
+                                </div>
+                            </div>
+
                         </h1>
                     </div>
                 </div>
@@ -59,10 +76,18 @@
                             {% endfor %}
                             <form action="{{ path('caisse_jour') }}">
                                 <div class="row mb-5">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
+                                        <select name="caissier" id="caissier" class="form-control">
+                                            <option value=""></option>
+                                            {% for caissier in caissiers %}
+                                                <option value="{{ caissier.username }}">{{ caissier.username }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
                                         <input type="text" class="js-datepicker form-control" name="date_debut" autocomplete="off">
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <input type="text" class="js-datepicker form-control" name="date_fin" autocomplete="off">
                                     </div>
                                     <div class="col-md-2">

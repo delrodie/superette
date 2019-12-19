@@ -34,9 +34,10 @@ class CaisseProduitController extends Controller
     public function caisseAction(Request $request)
     {
         $em =$this->getDoctrine()->getManager();
-        $date_debut = null; $date_fin = null;
+        $date_debut = null; $date_fin = null; $caissier = null;
         $debut = $request->get('date_debut');
         $fin = $request->get('date_fin');
+        $caissier = $request->get('caissier');
         if ($debut){
             $date1 = explode('/',$debut);
             $date_debut = $date1[2].'-'.$date1[0].'-'.$date1[1];
@@ -46,13 +47,16 @@ class CaisseProduitController extends Controller
             $date_fin = $date2[2].'-'.$date2[0].'-'.$date2[1];
         }
 
-        $factures = $em->getRepository("AppBundle:Facture")->findByPeriode($date_debut,$date_fin);
+        $factures = $em->getRepository("AppBundle:Facture")->findByPeriode($date_debut,$date_fin,$caissier);
+        $caissiers = $em->getRepository("AppBundle:User")->findUsers();
         //dump($factures);die();
 
         return $this->render("produit/facture_list.html.twig",[
             'factures' => $factures,
             'debut' => $date_debut,
             'fin' => $date_fin,
+            'caissiers' => $caissiers,
+            'caissier' => $caissier,
         ]);
     }
 
