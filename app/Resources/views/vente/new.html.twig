@@ -65,7 +65,11 @@
                                     {% for vente in ventes %}
                                         <tr>
                                             <td>{{ loop.index }}
-                                            <td>{{ vente.produit.categorie.libelle }} {{ vente.produit.libelle }}</td>
+                                            <td>
+                                                <a href="{{ path('vente_edit', {'id': vente.id}) }}">
+                                                    {{ vente.produit.categorie.libelle }} {{ vente.produit.libelle }}
+                                                </a>
+                                            </td>
                                             <td class="text-right">{{ vente.produit.prixVente }}</td>
                                             <td class="text-center">{{ vente.quantite }}</td>
                                             <td class="text-right">{{ (vente.quantite * vente.produit.prixVente)|number_format(0,'','.') }}</td>

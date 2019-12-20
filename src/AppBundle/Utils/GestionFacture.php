@@ -53,6 +53,25 @@ class GestionFacture
         return true;
     }
 
+    /**
+     * Deduction du montant de la vente du montant total de la facture
+     *
+     * @param $id
+     * @param $montant
+     * @param $qte
+     * @return bool
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function deleteVente($id,$montant,$qte)
+    {
+        $facture = $this->em->getRepository("AppBundle:Facture")->findOneBy(['id'=>$id]);
+        $facture->setMontant($facture->getMontant()-$montant);
+        $facture->setNombreProduit($facture->getNombreProduit()-$qte);
+        $this->em->flush();
+
+        return true;
+    }
+
     public function finalisation($id,$verse,$monnaie)
     {
         $facture = $this->em->getRepository("AppBundle:Facture")->findOneBy(['id'=>$id]);

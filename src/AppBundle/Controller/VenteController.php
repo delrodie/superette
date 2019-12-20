@@ -117,6 +117,7 @@ class VenteController extends Controller
      */
     public function editAction(Request $request, Vente $vente)
     {
+        $em = $this->getDoctrine()->getManager();
         $deleteForm = $this->createDeleteForm($vente);
         $editForm = $this->createForm('AppBundle\Form\VenteType', $vente);
         $editForm->handleRequest($request);
@@ -126,11 +127,15 @@ class VenteController extends Controller
 
             return $this->redirectToRoute('vente_edit', array('id' => $vente->getId()));
         }
+        $ventes = $em->getRepository("AppBundle:Vente")->findBy(['facture'=>$vente->getFacture()->getId()]);
+        $facture = $em->getRepository("AppBundle:Facture")->findOneBy(['id'=>$vente->getFacture()->getId()]);
 
         return $this->render('vente/edit.html.twig', array(
             'vente' => $vente,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'ventes' => $ventes,
+            'facture' => $facture
         ));
     }
 
@@ -140,18 +145,25 @@ class VenteController extends Controller
      * @Route("/{id}", name="vente_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Vente $vente)
+    public function deleteAction(Request $request, Vente $vente, GestionFacture $gestionFacture, GestionInventaire $gestionInventaire)
     {
         $form = $this->createDeleteForm($vente);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $produitId = $vente->getProduit()->getId();
+            $produitQte = $vente->getQuantite();
+            $factureID = $vente->getFacture()->getId();
+            $montant = $vente->getMontant();
             $em->remove($vente);
             $em->flush();
+            // Mise a jour des pages
+            $gestionFacture->deleteVente($factureID,$montant,1);
+            $gestionInventaire->addStock($produitId,$produitQte);
         }
 
-        return $this->redirectToRoute('vente_index');
+        return $this->redirectToRoute('vente_new',['facture'=>$factureID]);
     }
 
     /**

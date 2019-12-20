@@ -86,12 +86,12 @@
                             {{ form_start(edit_form)}}
                             <div class="form-row">
                                 <div class="col-12 form-group">
-                                    <input type="text" class="form-control" name="produit" autocomplete="off" required placeholder="Reference produit">
+                                    <input type="text" class="form-control" name="produit" autocomplete="off" required value="{{ vente.produit.categorie.libelle }} {{ vente.produit.libelle}}" readonly>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-12 form-group">
-                                    {{ form_widget(edit_form.quantite)}}
+                                    {{ form_widget(edit_form.quantite,{'attr':{'class':'form-control', 'readonly':'readonly'}})}}
                                     {{ form_errors(edit_form.quantite) }}
                                 </div>
                             </div>
@@ -102,13 +102,15 @@
                                 </div>
                             </div>
                             <div class="form-group text-right">
-                                <button class="btn btn-primary">Ajouter</button>
+                                <a href="{{ path('vente_new', {'facture': facture.id}) }}" class="btn btn-default">Annuler</a>
                             </div>
                             {{ form_end(edit_form) }}
+                                <div class="form-group text-left">
+                                    {{ form_start(delete_form, {'attr': {'onsubmit': 'return confirm("Êtes-vous sur de vouloir supprimer ce produit de la facture encours?");'}}) }}
+                                    <button class="btn btn-danger"><i class="fa fa-trash"></i> Suprimer</button>
+                                    {{ form_end(delete_form) }}
+                                </div>
                         </div>
-                    </div>
-                    <div class="mt-5">
-                        <a href="{{ path('facture_show', {'id': facture.id}) }}" class="btn btn-danger">Facturation</a>
                     </div>
                 </div>
             </div>
