@@ -20,7 +20,7 @@ class EtatInventaireController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $inventaires = $em->getRepository("AppBundle:Inventaire")->findAll();
+        $inventaires = $em->getRepository("AppBundle:Inventaire")->findDesc();
 
         return $this->render("etat/inventaire_list.html.twig",[
             'inventaires' => $inventaires

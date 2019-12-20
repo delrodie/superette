@@ -62,6 +62,10 @@ class GestionProduit
         //dump($dernierCode);die();
         if ($dernierCode){
             $reference = $dernierCode->getReference()+1; //dump($reference);die();
+            $verifExist = $this->em->getRepository("AppBundle:Produit")->findOneBy(['reference'=>$reference]);
+            while ($verifExist){
+                $reference = $reference+1;
+            }
         }else{
             $categorieCode = $this->em->getRepository("AppBundle:Categorie")->findOneBy(['id'=>$categorie])->getCode();
             $reference = $categorieCode.'001';

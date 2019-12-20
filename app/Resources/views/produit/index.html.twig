@@ -56,7 +56,7 @@
                                     <thead>
                                     <tr>
                                         <td>ID</td>
-                                        <td>Catégories</td>
+                                        <td>Code barres</td>
                                         <td>Ref.</td>
                                         <td>Noms</td>
                                         <td>P.Achats</td>
@@ -68,11 +68,11 @@
                                     <tbody>
                                     {% for produit in produits %}
                                         {% if produit.stock is null %}
-                                            <tr class="text-danger">
+                                            <tr class="text-danger" style="font-size: 0.9em;">
                                                 <td>{{ loop.index }}
-                                                <td>{{ produit.categorie.libelle }}</td>
+                                                <td>{{ produit.codebarre }}</td>
                                                 <td>{{ produit.reference }}</td>
-                                                <td>{{ produit.libelle }}</td>
+                                                <td>{{ produit.categorie.libelle }} {{ produit.libelle }}</td>
                                                 <td class="text-right">{{ produit.prixAchat }}</td>
                                                 <td class="text-right">{{ produit.prixVente }}</td>
                                                 <td class="text-center">
@@ -88,11 +88,11 @@
                                                 </td>
                                             </tr>
                                         {% else %}
-                                            <tr>
+                                            <tr style="font-size: 0.9em;">
                                                 <td>{{ loop.index }} </td>
-                                                <td>{{ produit.categorie.libelle }}</td>
-                                                <td>{{ produit.reference }}</td>
-                                                <td>{{ produit.libelle }}</td>
+                                                <td>{{ produit.codebarre }}</td>
+                                                <td> {{ produit.reference }}</td>
+                                                <td>{{ produit.categorie.libelle }} {{ produit.libelle }}</td>
                                                 <td class="text-right">{{ produit.prixAchat }}</td>
                                                 <td class="text-right">{{ produit.prixVente }}</td>
                                                 <td class="text-center">
@@ -157,7 +157,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-12 form-group">
-                                    {{ form_widget(form.stock,{'attr':{'readonly':'readonly'}})}}
+                                    {{ form_widget(form.stock)}}
                                     {{ form_errors(form.stock) }}
                                 </div>
                             </div>

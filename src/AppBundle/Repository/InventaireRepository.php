@@ -14,4 +14,9 @@ class InventaireRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->createQueryBuilder('i')->where('i.id = :id')->setParameter('id', $id);
     }
+
+    public function findDesc()
+    {
+        return $this->createQueryBuilder('i')->orderBy('i.id', 'DESC')->getQuery()->getResult();
+    }
 }

@@ -25,7 +25,7 @@ class InventaireController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $inventaires = $em->getRepository('AppBundle:Inventaire')->findAll();
+        $inventaires = $em->getRepository('AppBundle:Inventaire')->findDesc();
         $inventaire = new Inventaire();
         $form = $this->createForm('AppBundle\Form\InventaireType', $inventaire);
         $form->handleRequest($request);
