@@ -165,8 +165,8 @@
 														<tr>
 															<td>{{ loop.index }}</td>
 															<td class="text-center">{{ facture.date|date('d-m-Y') }}</td>
-															<td class="text-center">{{ facture.nombreProduit }}</td>
-															<td class="text-right">{{ facture.montant|number_format(0,'','.') }}</td>
+															<td class="text-center">{{ render(url('etat_nombre_produit_jour',{'date': facture.date})) }}</td>
+															<td class="text-right">{{ render(url('etat_caisse_recette_jour',{'date':facture.date}))|number_format(0,'','.') }}</td>
 														</tr>
 													{% endfor %}
 													</tbody>

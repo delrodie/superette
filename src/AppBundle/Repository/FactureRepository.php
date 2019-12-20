@@ -125,4 +125,34 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
                     ->getQuery()->getResult()
             ;
     }
+
+    /**
+     * recette correspondante à la date selectionnée
+     *
+     * @param $date
+     * @return mixed
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getRecette($date)
+    {
+        return $this->createQueryBuilder('f')
+                    ->select('sum(f.montant)')
+                    ->where('f.statut IS NULL')
+                    ->andWhere('f.date = :date')
+                    ->setParameter('date', $date)
+                    ->getQuery()->getSingleScalarResult();
+
+    }
+
+    public function getNombreproduit($date)
+    {
+        return $this->createQueryBuilder('f')
+                    ->select('sum(f.nombreProduit)')
+                    ->where('f.statut IS NULL')
+                    ->andWhere('f.date = :date')
+                    ->setParameter('date', $date)
+                    ->getQuery()->getSingleScalarResult();
+            ;
+    }
 }
