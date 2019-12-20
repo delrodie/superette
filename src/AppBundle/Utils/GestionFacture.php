@@ -72,11 +72,20 @@ class GestionFacture
         return true;
     }
 
-    public function finalisation($id,$verse,$monnaie)
+    public function finalisation($id,$verse,$monnaie,$reduction=null,$montantReduit=null)
     {
         $facture = $this->em->getRepository("AppBundle:Facture")->findOneBy(['id'=>$id]);
-        $facture->setVerse($verse);
-        $facture->setMonnaie($monnaie);
+        if ($reduction){
+            $facture->setPromotion($facture->getMontant());
+            $facture->setMontant($montantReduit);
+            $facture->setReduction($reduction);
+            $facture->setVerse($verse);
+            $facture->setMonnaie($monnaie);
+        }else{
+            $facture->setVerse($verse);
+            $facture->setMonnaie($monnaie);
+        }
+
         $this->em->flush();
 
         return true;

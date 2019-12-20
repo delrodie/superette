@@ -24,9 +24,11 @@ class ImpressionController extends Controller
         $em = $this->getDoctrine()->getManager();
         $verse = $request->get('verse');
         $monnaie = $request->get('monnaie');
+        $reduction = $request->get('facturation_reduction');
+        $montantReduit = $request->get('facturation_total');
         $ventes = $em->getRepository("AppBundle:Vente")->findBy(['facture'=>$facture->getId()]);
 
-        $gestionFacture->finalisation($facture->getId(),$verse,$monnaie);
+        $gestionFacture->finalisation($facture->getId(),$verse,$monnaie,$reduction,$montantReduit);
 
         return $this->render('etat/facture2.html.twig',[
             'facture' => $facture,

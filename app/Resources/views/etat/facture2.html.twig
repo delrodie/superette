@@ -94,18 +94,42 @@
 													<hr>
 												</td>
 											</tr>
-											<tr class="mt-5">
-												<td colspan="2" class="text-right">Total:</td>
-												<td class="text-right"><strong>{{ facture.montant|number_format(0,'',' ') }}</strong></td>
-											</tr>
-											<tr class="mt-5">
-												<td colspan="2" class="text-right">Verse:</td>
-												<td class="text-right"><strong>{{ facture.verse|number_format(0,'',' ') }}</strong></td>
-											</tr>
-											<tr class="mt-5">
-												<td colspan="2" class="text-right">Monnaie:</td>
-												<td class="text-right"><strong>{{ facture.monnaie|number_format(0,'',' ') }}</strong></td>
-											</tr>
+											{% if facture.reduction %}
+												<tr class="mt-5">
+													<td colspan="2" class="text-right">Total:</td>
+													<td class="text-right"><strong>{{ facture.promotion|number_format(0,'',' ') }}</strong></td>
+												</tr>
+												<tr class="mt-5">
+													<td colspan="2" class="text-right">Remise:</td>
+													<td class="text-right"><strong>{{ facture.reduction }}%</strong></td>
+												</tr>
+												<tr class="mt-5">
+													<td colspan="2" class="text-right">Net à payer:</td>
+													<td class="text-right"><strong>{{ facture.montant|number_format(0,'',' ')  }}</strong></td>
+												</tr>
+												<tr class="mt-5">
+													<td colspan="2" class="text-right">Verse:</td>
+													<td class="text-right"><strong>{{ facture.verse|number_format(0,'',' ') }}</strong></td>
+												</tr>
+												<tr class="mt-5">
+													<td colspan="2" class="text-right">Monnaie:</td>
+													<td class="text-right"><strong>{{ facture.monnaie|number_format(0,'',' ') }}</strong></td>
+												</tr>
+											{% else %}
+												<tr class="mt-5">
+													<td colspan="2" class="text-right">Total:</td>
+													<td class="text-right"><strong>{{ facture.montant|number_format(0,'',' ') }}</strong></td>
+												</tr>
+												<tr class="mt-5">
+													<td colspan="2" class="text-right">Verse:</td>
+													<td class="text-right"><strong>{{ facture.verse|number_format(0,'',' ') }}</strong></td>
+												</tr>
+												<tr class="mt-5">
+													<td colspan="2" class="text-right">Monnaie:</td>
+													<td class="text-right"><strong>{{ facture.monnaie|number_format(0,'',' ') }}</strong></td>
+												</tr>
+											{% endif %}
+
 										</table>
 										<div class="row">
 											<div class="col-md-12">
