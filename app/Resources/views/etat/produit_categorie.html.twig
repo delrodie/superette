@@ -1,0 +1,20 @@
+<table class="table">
+	<thead>
+	<th>ID</th>
+	<th>References</th>
+	<th>Produits</th>
+	<th>Qte</th>
+	<th>P.Vente</th>
+	</thead>
+	<tbody>
+	{% for produit in produits %}
+		<tr>
+			<td>{{ loop.index }}</td>
+			<td>{{ produit.reference }}</td>
+			<td>{{ produit.categorie.libelle }} {{ produit.libelle }}</td>
+			<td class="text-center">{{ produit.stock }}</td>
+			<td class="text-right">{{ produit.prixVente|number_format(0,'','.') }}</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>

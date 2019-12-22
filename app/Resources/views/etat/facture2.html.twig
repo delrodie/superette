@@ -63,7 +63,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="row mb-5">
-											<div class="col-md-12">
+											<div class="col-md-4">
 												<p class="text-center mb-2">
 													<strong>SUPERETTE EXPRESS</strong><br>
 													Faya Nouveau goudron <br>
@@ -71,13 +71,17 @@
 												</p>
 											</div>
 										</div>
-										<table class="table">
+										<table class="" width="30%">
 											<tr>
 												<td class="">Ticket No: <strong>{{ facture.reference }}</strong></td>
-												<td class="text-right">Date: <strong>{{ facture.publieLe|date('d/m/Y H:i:s') }}</strong></td>
+												<td class="text-right">Date: <strong>{{ facture.publieLe|date('d/m/Y') }}</strong></td>
+											</tr>
+											<tr>
+												<td class="">Caisse: <strong>{{ facture.publiePar|title }}</strong></td>
+												<td class="text-right">Heure: <strong>{{ facture.publieLe|date('H:i:s') }}</strong></td>
 											</tr>
 										</table>
-										<table width="100%">
+										<table width="30%">
 
 											<tr>
 												<td class="mt-5 mb-5" colspan="3">.</td>
@@ -131,12 +135,15 @@
 											{% endif %}
 
 										</table>
+										<table class="" width="30%">
+
+										</table>
 										<div class="row">
-											<div class="col-md-12">
+											<div class="col-md-4">
 												<div class="row mt-5">
-													<div class="col-md-12 text-center">
+													<div class="col-md-12 text-center" style="font-size: 0.9em;">
 														<em>Nous vous remercions de nous avoir visités</em><br>
-														<em>NB: La superette est ouverte en permanence de O8h à 20h</em>
+														<em>NB: La superette est ouverte en permanence <br> de O8h à 20h</em>
 													</div>
 												</div>
 											</div>
