@@ -203,10 +203,18 @@
                         <!--submenu-->
                         <ul class="sub-menu">
                             <li class="menu-item">
-                                <a href='fournisseur.html' class=' menu-link'>
-                            <span class="menu-label">
-                                <span class="menu-name">Gestionnaire</span>
-                            </span>
+                                <a href="{{ path('generation_code_clear') }}" class=' menu-link'>
+                                <span class="menu-label">
+                                    <span class="menu-name">Reinitialiser</span>
+                                </span>
+                                    <span class="menu-icon"><i class="icon-placeholder fa fa-users-cog"></i></span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{ path('generation_code_produit') }}" class=' menu-link'>
+                                <span class="menu-label">
+                                    <span class="menu-name">Generer code</span>
+                                </span>
                                     <span class="menu-icon"><i class="icon-placeholder fa fa-users-cog"></i></span>
                                 </a>
                             </li>

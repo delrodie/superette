@@ -58,18 +58,15 @@ class GestionProduit
      */
     public function codeProduit($categorie)
     {
-        $dernierCode = $this->em->getRepository("AppBundle:Produit")->findOneBy(['categorie'=>$categorie],['id'=>'DESC']);
-        //dump($dernierCode);die();
-        if ($dernierCode){
-            $reference = $dernierCode->getReference()+1; //dump($reference);die();
-            $verifExist = $this->em->getRepository("AppBundle:Produit")->findOneBy(['reference'=>$reference]);
-            while ($verifExist){
-                $reference = $reference+1;
-            }
-        }else{
-            $categorieCode = $this->em->getRepository("AppBundle:Categorie")->findOneBy(['id'=>$categorie])->getCode();
-            $reference = $categorieCode.'001';
-        }
+        //Recuperation du code de la categorie et du nombre de produit enregistré
+        $categorieEntity= $this->em->getRepository("AppBundle:Categorie")->findOneBy(['id'=>$categorie]);
+        $nombreProduit = $categorieEntity->getNombreProduit();
+        $latence = $nombreProduit+1;
+        if ($latence < 10) $reference = $categorieEntity->getCode().'00'.$latence;
+        elseif ($latence < 100) $reference = $categorieEntity->getCode().'0'.$latence;
+        else $reference = $categorieEntity->getCode().''.$latence;
+        // affectation de la concatenation du code de la categorie et de nombre de produit plus 1
+
         return $reference;
     }
 

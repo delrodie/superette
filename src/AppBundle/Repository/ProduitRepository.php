@@ -29,6 +29,10 @@ class ProduitRepository extends \Doctrine\ORM\EntityRepository
         }
     }
 
+    /**
+     * @param null $codeBarre
+     * @return array|bool
+     */
     public function findByCodeBarre($codeBarre = null)
     {
         if ($codeBarre){
@@ -39,5 +43,16 @@ class ProduitRepository extends \Doctrine\ORM\EntityRepository
         }else{
             return false;
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function findByReferenceIsNull()
+    {
+        return $this->createQueryBuilder('p')
+                    ->where('p.reference IS NULL')
+                    ->getQuery()->getResult()
+            ;
     }
 }
