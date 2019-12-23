@@ -107,7 +107,25 @@ class InventaireController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            // recuperer les anciennes valeurs du montant et de la reduction.
+            $deductionOld = $request->get('old_deduction');
+            $montantOld = $request->get('old_montant');
+
+            // Si le reste du montant a deduire est negatif alors refuser la modifiction
+            $difference = $inventaire->getMontant() - $montantOld;
+            $deduction = $deductionOld+$difference;
+            if ($deduction < 0) {
+                $this->addFlash('error',"Impossible de diminuer le montant initial de la facture. Car la somme des produits déjà enregistrés est supérieure à <strong>".$inventaire->getMontant()."</strong> FCFA");
+                return $this->redirectToRoute("inventaire_edit",['id'=>$inventaire->getId()]);
+            }
+
+            // Sinon enregistrer les modifications
+            $inventaire->setMontant($inventaire->getMontant());
+            $inventaire->setDeduction($deduction);
+            //dump($inventaire);die();
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('notice', "Modification effectuée avec succès. Montant restant <strong>".$deduction." </strong>");
 
             return $this->redirectToRoute('inventorier_index', array('inventaire' => $inventaire->getId()));
         }

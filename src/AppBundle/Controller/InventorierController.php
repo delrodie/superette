@@ -25,7 +25,7 @@ class InventorierController extends Controller
     public function indexAction(Request $request, $inventaire, GestionInventaire $gestionInventaire)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $inventaireEntity = $em->getRepository("AppBundle:Inventaire")->findOneBy(['id'=>$inventaire]);
         $inventoriers = $em->getRepository('AppBundle:Inventorier')->findBy(['inventaire'=>$inventaire],['id'=>"DESC"]);
         $inventorier = new Inventorier();
         $form = $this->createForm('AppBundle\Form\InventorierType', $inventorier, ['inventaire'=>$inventaire]);
@@ -56,15 +56,16 @@ class InventorierController extends Controller
             // Si montant restant est 0 alors renvoi liste des inventaires
             if ($montantrestant == 0) {
                 $this->addFlash('notice',"BRAVO! l'enregistrement de la facture du fournisseur est effectif!");
-                return $this->redirectToRoute('inventaire_index');
+                return $this->redirectToRoute('etat_inventaire_show',['id'=>$inventaire]);
             }
-            return $this->redirectToRoute('inventorier_index',['inventaire'=>$inventaire]);
+            return $this->redirectToRoute('etat_inventaire_show',['id'=>$inventaire]);
         }
 
         return $this->render('inventorier/index.html.twig', array(
             'inventoriers' => $inventoriers,
             'inventorier' => $inventorier,
             'form' => $form->createView(),
+            'inventaire' => $inventaireEntity
         ));
     }
 
@@ -130,6 +131,17 @@ class InventorierController extends Controller
             $old_produit = $request->get('old_produit');
             $old_quantite = $request->get('old_quantite');
             $old_montant = $request->get('old_montant');
+
+            // Si le montant restant de la facture est superieur a 0 alors refuser la modification
+            $montantrestant = $em->getRepository("AppBundle:Inventaire")->findOneBy(['id'=>$inventaire->getId()])->getDeduction();
+            $new_montant = $inventorier->getMontant();
+            $difMontant = $old_montant-$new_montant;
+            $restant = $montantrestant+$difMontant;
+            if ($restant<0){
+                $this->addFlash('error',"Impossible d'augmenter le montant du produit. Car la somme des produits déjà enregistrés est supérieure au montant total de la facture");
+                return $this->redirectToRoute("inventorier_edit",['id'=>$inventorier->getId()]);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             // Si le produit a été modifié alors faire la mise a jour des stocks
@@ -144,8 +156,20 @@ class InventorierController extends Controller
                 $gestionInventaire->updatePrixAchat($inventorier->getProduit()->getId(),$inventorier->getMontant(),$inventorier->getQuantite());
             }
 
-            $this->addFlash('notice', "Mise a jour effective");
-            return $this->redirectToRoute('inventorier_show', array('id' => $inventorier->getInventaire()->getId()));
+            //Mise a jour du montant de deduction de l'inventaire
+            $difference = $inventorier->getMontant()-$old_montant;
+            $gestionInventaire->deduction($inventorier->getInventaire()->getId(), $difference);
+            $restantFinal = $em->getRepository("AppBundle:Inventaire")->findOneBy(['id'=>$inventaire->getId()])->getDeduction();
+
+            if ($restantFinal == 0){
+                $this->addFlash('notice', "Mise a jour effective");
+                $this->addFlash('notice', "Produit enregistré avec succes. Montant restant <strong>".$restant." </strong>");
+                return $this->redirectToRoute('inventorier_show', array('id' => $inventorier->getInventaire()->getId()));
+            }else{
+                $this->addFlash('notice', "Produit enregistré avec succes. Montant restant <strong>".$restant." </strong>");
+                return $this->redirectToRoute('inventorier_index', array('inventaire' => $inventorier->getInventaire()->getId()));
+            }
+
         }
 
         $inventoriers = $em->getRepository('AppBundle:Inventorier')->findBy(['inventaire'=>$inventaire],['id'=>"DESC"]);

@@ -65,8 +65,13 @@ class GestionProduit
         if ($latence < 10) $reference = $categorieEntity->getCode().'00'.$latence;
         elseif ($latence < 100) $reference = $categorieEntity->getCode().'0'.$latence;
         else $reference = $categorieEntity->getCode().''.$latence;
-        // affectation de la concatenation du code de la categorie et de nombre de produit plus 1
 
+        // Verification de la non existence de la reference du produit
+        $code = $this->em->getRepository("AppBundle:Produit")->findOneBy(['reference'=>$reference]);
+        while($code){ //die('attraper ici');
+            $reference = $reference+1;
+            $code = $this->em->getRepository("AppBundle:Produit")->findOneBy(['reference'=>$reference]);
+        }
         return $reference;
     }
 
