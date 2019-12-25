@@ -58,7 +58,7 @@ class InventorierController extends Controller
                 $this->addFlash('notice',"BRAVO! l'enregistrement de la facture du fournisseur est effectif!");
                 return $this->redirectToRoute('etat_inventaire_show',['id'=>$inventaire]);
             }
-            return $this->redirectToRoute('etat_inventaire_show',['id'=>$inventaire]);
+            return $this->redirectToRoute('inventorier_index',['inventaire'=>$inventaire]);
         }
 
         return $this->render('inventorier/index.html.twig', array(
