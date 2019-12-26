@@ -147,11 +147,13 @@
 													<th>Benef.</th>
 													</thead>
 													<tbody>
-													{% set pa = 0 %}{% set benef = 0 %} {% set benefTotal = 0 %}
+													{% set pa = 0 %}{% set benef = 0 %} {% set benefTotal = 0 %} {% set cpteur = 0 %} {% set ben = 0 %}
 													{% for inventorier in inventoriers %}
 														{% set pa = inventorier.montant / inventorier.quantite %}
 														{% set benef = inventorier.produit.prixVente - pa %}
 														{% set benefTotal = benefTotal + benef %}
+														{% set cpteur = cpteur + 1 %}
+														{% set ben = benef * inventorier.quantite %}
 														<tr>
 															<td>{{ loop.index }}</td>
 															<td>{{ inventorier.produit.reference }}</td>
@@ -166,8 +168,14 @@
 													</tbody>
 													<tfoot>
 													<tr>
-														<td colspan="4" class="text-right">Montant Achat:<strong>{{ inventaire.montant|number_format(0,'','.') }}</strong> FCFA</td>
-														<td colspan="4" class="text-right">Total Benefice: <strong>{{ benefTotal|round|number_format(0,'','.') }}</strong> FCFA</td>
+														<td colspan="4" class="text-right">Montant Achat: <strong>{{ inventaire.montant|number_format(0,'','.') }}</strong> FCFA</td>
+														<td colspan="4" class="text-right">
+															{% if cpteur == 1 %}
+																Total Benefice: <strong>{{ ben|round|number_format(0,'','.') }}</strong> FCFA
+															{% else %}
+																Total Benefice: <strong>{{ benefTotal|round|number_format(0,'','.') }}</strong> FCFA
+															{% endif %}
+														</td>
 													</tr>
 													</tfoot>
 												</table>
