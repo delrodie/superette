@@ -120,14 +120,17 @@
 									<div class="col-md-12" style="border: #cccccc solid 1px">
 										<div class="row mb-5">
 											<div class="col-md-12">
-												<p class="text-center h4 mb-2">
-													<strong>LISTE DES PRODUITS</strong><br>
+												<p class="text-center h4 mb-3">
+													<strong>Approvisionnement N°: {{ inventaire.reference }}</strong><br>
 												</p>
 												<div class="row">
 													<div class="col-md-6">
 														Fournisseur: <strong>{{ inventaire.fournisseur.nom }}</strong>
 													</div>
-													<div class="col-md-6 text-right">
+													<div class="col-md-3">
+														Facture N°:<strong>{{ inventaire.refFournisseur }}</strong>
+													</div>
+													<div class="col-md-3 text-right">
 														Date: <strong>{{ inventaire.date|date('d-m-Y') }}</strong>
 													</div>
 												</div>
@@ -144,14 +147,17 @@
 													<th>Qte</th>
 													<th>P.U.Achat</th>
 													<th>P.Vente</th>
-													<th>Benef.</th>
+													<th>B.U.</th>
+													<th>B.Total</th>
 													</thead>
 													<tbody>
 													{% set pa = 0 %}{% set benef = 0 %} {% set benefTotal = 0 %} {% set cpteur = 0 %} {% set ben = 0 %}
+													{% set benePartiel = 0 %}
 													{% for inventorier in inventoriers %}
 														{% set pa = inventorier.montant / inventorier.quantite %}
 														{% set benef = inventorier.produit.prixVente - pa %}
-														{% set benefTotal = benefTotal + benef %}
+														{% set benePartiel = benef * inventorier.quantite %}
+														{% set benefTotal = benefTotal + benePartiel %}
 														{% set cpteur = cpteur + 1 %}
 														{% set ben = benef * inventorier.quantite %}
 														<tr>
@@ -163,13 +169,14 @@
 															<td class="text-right">{{ pa|round|number_format(0,'','.') }}</td>
 															<td class="text-right">{{ inventorier.produit.prixVente|number_format(0,'','.') }}</td>
 															<td class="text-right">{{ benef|round|number_format(0,'','.') }}</td>
+															<td class="text-right">{{ benePartiel|round|number_format(0,'','.') }}</td>
 														</tr>
 													{% endfor %}
 													</tbody>
 													<tfoot>
 													<tr>
 														<td colspan="4" class="text-right">Montant Achat: <strong>{{ inventaire.montant|number_format(0,'','.') }}</strong> FCFA</td>
-														<td colspan="4" class="text-right">
+														<td colspan="5" class="text-right">
 															{% if cpteur == 1 %}
 																Total Benefice: <strong>{{ ben|round|number_format(0,'','.') }}</strong> FCFA
 															{% else %}
