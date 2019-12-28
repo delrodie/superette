@@ -9,7 +9,7 @@
 		<script src='{{ absolute_url(asset('ressources/assets/js/pace.min.js'))}}'></script>
 		<link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/bundles/291bbeead57f19651f311362abe809b67adc3fb5.css')) }}'/>
 		<link rel='stylesheet' href='{{ absolute_url(asset('ressources/assets/bundles/30bc673ce76f73ecf02568498f6b139269f6e4c7.css')) }}'/>
-		<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,600" rel="stylesheet">
+		<!--<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,600" rel="stylesheet">-->
 		<link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/css/materialdesignicons.min.css'))}}'/>
 		<link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/css/feather-icons.css'))}}'/>
 		<link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/css/atmos.min.css'))}}'/>
@@ -70,7 +70,7 @@
 										<table width="35%">
 											<tr>
 												<td>
-													<div class="text-center mb-5 fontArial" style="font-size: 0.9em;">
+													<div class="text-center mb-5" style="font-size: 0.9em;">
 														<strong>SUPERETTE EXPRESS</strong><br>
 														Faya Nouveau goudron <br>
 														Tel: +225 59 13 69 78
@@ -78,7 +78,7 @@
 												</td>
 											</tr>
 										</table>
-										<table class="fontArial" width="35%">
+										<table class="" width="35%">
 											<tr>
 												<td class="">Ticket No: <strong>{{ facture.reference }}</strong></td>
 												<td class="text-right">Date: <strong>{{ facture.publieLe|date('d/m/Y') }}</strong></td>
@@ -88,7 +88,7 @@
 												<td class="text-right">Heure: <strong>{{ facture.publieLe|date('H:i:s') }}</strong></td>
 											</tr>
 										</table>
-										<table width="35%" class="fontArial">
+										<table width="35%">
 
 											<tr>
 												<td class="mt-5 mb-5" colspan="3">.</td>
@@ -142,7 +142,7 @@
 											{% endif %}
 
 										</table>
-										<table class="mt-5 fontArial" width="35%">
+										<table class="mt-5" width="35%">
 											<tr>
 												<td>
 													<div class="col-md-12 text-center" style="font-size: 0.9em;">
