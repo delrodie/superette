@@ -17,6 +17,11 @@
 	{% endblock %}
 	<link rel="icon" type="image/x-icon" href="{{ absolute_url(asset('ressources/img/favicon.ico')) }}"/>
 	<link rel="icon" href="{{ absolute_url(asset('ressources/img/favico.ico')) }}" type="image/png" sizes="16x16">
+	<style>
+		.fontArial{
+			font-family: Arial, Helvetica, sans-serif;
+		}
+	</style>
 </head>
 <body class="sidebar-pinned ">
 <aside class="admin-sidebar">
@@ -62,10 +67,10 @@
 							<div class="card-body">
 								<div class="row">
 									<div class="col-md-12">
-										<table width="42%">
+										<table width="35%">
 											<tr>
 												<td>
-													<div class="text-center mb-5" style="font-size: 0.9em;">
+													<div class="text-center mb-5 fontArial" style="font-size: 0.9em;">
 														<strong>SUPERETTE EXPRESS</strong><br>
 														Faya Nouveau goudron <br>
 														Tel: +225 59 13 69 78
@@ -73,7 +78,7 @@
 												</td>
 											</tr>
 										</table>
-										<table class="" width="42%">
+										<table class="fontArial" width="35%">
 											<tr>
 												<td class="">Ticket No: <strong>{{ facture.reference }}</strong></td>
 												<td class="text-right">Date: <strong>{{ facture.publieLe|date('d/m/Y') }}</strong></td>
@@ -83,7 +88,7 @@
 												<td class="text-right">Heure: <strong>{{ facture.publieLe|date('H:i:s') }}</strong></td>
 											</tr>
 										</table>
-										<table width="42%">
+										<table width="35%" class="fontArial">
 
 											<tr>
 												<td class="mt-5 mb-5" colspan="3">.</td>
@@ -137,7 +142,7 @@
 											{% endif %}
 
 										</table>
-										<table class="mt-5" width="42%">
+										<table class="mt-5 fontArial" width="35%">
 											<tr>
 												<td>
 													<div class="col-md-12 text-center" style="font-size: 0.9em;">
