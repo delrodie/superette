@@ -27,7 +27,7 @@
 	{% for vente in ventes %}
 		<tr class="">
 			<td><!--{{ vente.produit.reference }}--> {{ vente.produit.libelle }}</td>
-			<td style="text-align:right;">{{ vente.quantite }}</td>
+			<td style="text-align:center;">{{ vente.quantite }}</td>
 			<td style="text-align:right;">{{ vente.montant|number_format(0,'',' ') }}</td>
 		</tr>
 	{% endfor %}
