@@ -20,7 +20,7 @@ class VenteType extends AbstractType
         $this->facture =$options['facture'];
         $facture = $this->facture;
         $builder
-            ->add('quantite', IntegerType::class,['attr'=>['class'=>'form-control', 'placeholder'=>"Qte", 'autocomplete'=>'off'],'required'=>false])
+            ->add('quantite', IntegerType::class,['attr'=>['class'=>'form-control', 'placeholder'=>"Qte", 'autocomplete'=>'off', "accesskey"=>"Z"],'required'=>false])
             //->add('montant', TextType::class,['attr'=>['class'=>'form-control']])
             //->add('publiePar')->add('modifiePar')->add('publieLe')->add('modifieLe')
             ->add('facture', EntityType::class,[
