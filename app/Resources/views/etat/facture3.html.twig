@@ -1,0 +1,83 @@
+<!DOCTYPE>
+<html>
+<body onload="window.print(); window.close()">
+<table width="100%">
+	<tr>
+		<td>
+			<div class="mb-5" style="font-size: 0.7em; font-family: Consolas; text-align: center">
+				<a href="{{ path('facture_new') }}"><strong>SUPERETTE EXPRESS</strong></a><br>
+				Faya Nouveau goudron <br>
+				Tel: +225 59136978 / 47742221
+			</div>
+		</td>
+	</tr>
+</table>
+<table class="" width="100%" style="font-size: 0.7em; margin-top: 30px;">
+	<tr>
+		<td class="">Ticket No: <strong>{{ facture.reference }}</strong></td>
+		<td style="text-align: right">Date: <strong>{{ facture.publieLe|date('d/m/Y') }}</strong></td>
+	</tr>
+	<tr>
+		<td class="">Caisse: <strong>{{ facture.publiePar|title }}</strong></td>
+		<td style="text-align: right">Heure: <strong>{{ facture.publieLe|date('H:i:s') }}</strong></td>
+	</tr>
+</table>
+<table width="100%" style="font-size: 0.7em; margin-top: 30px; font-family: Consolas;">
+
+	{% for vente in ventes %}
+		<tr class="">
+			<td><!--{{ vente.produit.reference }}--> {{ vente.produit.libelle }}</td>
+			<td style="text-align:right;">{{ vente.quantite }}</td>
+			<td style="text-align:right;">{{ vente.montant|number_format(0,'',' ') }}</td>
+		</tr>
+	{% endfor %}
+	<tr>
+		<td style="margin-top: 30px;"></td>
+	</tr>
+	{% if facture.reduction %}
+		<tr style="margin-top: 30px;">
+			<td colspan="2" style="text-align:right;">Total:</td>
+			<td style="text-align:right;"><strong>{{ facture.promotion|number_format(0,'',' ') }}</strong></td>
+		</tr>
+		<tr class="mt-5">
+			<td colspan="2" style="text-align:right;">Remise:</td>
+			<td style="text-align:right;"><strong>{{ facture.reduction }}%</strong></td>
+		</tr>
+		<tr class="mt-5">
+			<td colspan="2" style="text-align:right;">Net à payer:</td>
+			<td style="text-align:right;"><strong>{{ facture.montant|number_format(0,'',' ')  }}</strong></td>
+		</tr>
+		<tr class="mt-5">
+			<td colspan="2" style="text-align:right;">Verse:</td>
+			<td style="text-align:right;"><strong>{{ facture.verse|number_format(0,'',' ') }}</strong></td>
+		</tr>
+		<tr class="mt-5">
+			<td colspan="2" style="text-align:right;">Monnaie:</td>
+			<td style="text-align:right;"><strong>{{ facture.monnaie|number_format(0,'',' ') }}</strong></td>
+		</tr>
+	{% else %}
+		<tr class="mt-5">
+			<td colspan="2" style="text-align:right;">Total:</td>
+			<td style="text-align:right;"><strong>{{ facture.montant|number_format(0,'',' ') }}</strong></td>
+		</tr>
+		<tr class="mt-5">
+			<td colspan="2" style="text-align:right;">Verse:</td>
+			<td style="text-align:right;"><strong>{{ facture.verse|number_format(0,'',' ') }}</strong></td>
+		</tr>
+		<tr class="mt-5">
+			<td colspan="2" style="text-align:right;">Monnaie:</td>
+			<td style="text-align:right;"><strong>{{ facture.monnaie|number_format(0,'',' ') }}</strong></td>
+		</tr>
+	{% endif %}
+
+</table>
+<table width="100%" style="font-size: 0.65em; margin-top: 30px; font-style:italic; text-align:center;">
+	<tr>
+		<td>
+			<em>Nous vous remercions de nous avoir visités</em><br>
+			<em>NB: La superette est ouverte en permanence <br> de O8h à 20h</em>
+		</td>
+	</tr>
+</table>
+</body>
+</html>
