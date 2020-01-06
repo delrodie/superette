@@ -55,6 +55,10 @@ class VenteController extends Controller
                 $this->addFlash('error', "Attention ce produit n'existe pas");
                 return $this->redirectToRoute('vente_new',['facture'=>$facture]);
             }
+            if ($produit->getStock() < 1){
+                $this->addFlash('error', "Attention le stock de ce produit est 0. Veuillez enregistrer la facture du fournisseur avant de faire la vente");
+                return $this->redirectToRoute('vente_new',['facture'=>$facture]);
+            }
             if (!$vente->getQuantite()){
                 $qte = 1;
             }else{
