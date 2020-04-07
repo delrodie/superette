@@ -163,7 +163,12 @@
 														{% for facture in factures %}
 															{% set total = total + facture.montant %}
 														{% endfor %}
-														Recette: <span class="h3"><a href="{{ path('etat_caisse_details', {'debut': debut, 'fin': fin, 'user': caissier}) }}"><strong>{{ total|number_format(0,'','.') }}</strong></a> FCFA</span>
+														{% if caissier %}
+															Recette: <span class="h3"><a href="{{ path('etat_caisse_details', {'debut': debut, 'fin': fin, 'user': caissier}) }}"><strong>{{ total|number_format(0,'','.') }}</strong></a> FCFA</span>
+														{% else %}
+															Recette: <span class="h3"><a href="#"><strong>{{ total|number_format(0,'','.') }}</strong></a> FCFA</span>
+														{% endif %}
+
 													</div>
 												</div>
 											</div>

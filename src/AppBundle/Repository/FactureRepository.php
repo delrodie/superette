@@ -120,7 +120,7 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder('f')
                     ->andWhere('f.montant <> 0')
                     ->andWhere('f.statut IS NULL')
-                    ->groupBy('f.date')
+                    //->groupBy('f.date')
                     ->orderBy('f.publieLe', 'DESC')
                     ->getQuery()->getResult()
             ;

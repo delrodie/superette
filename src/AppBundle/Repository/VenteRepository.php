@@ -10,4 +10,37 @@ namespace AppBundle\Repository;
  */
 class VenteRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findList($debut=null, $fin=null, $caissier=null)
+    {
+        // Si le caissier a été défini
+        if ($caissier){
+            $q = $this->createQueryBuilder('v')
+                ->leftJoin('v.facture', 'f')
+                ->leftJoin('f.user', 'u')
+                ->leftJoin('v.produit', 'p')
+                ->where('f.date BETWEEN :debut AND :fin')
+                ->andWhere('u.username = :caissier')
+                ->setParameters([
+                    'debut'=> $debut,
+                    'fin' => $fin,
+                    'caissier'=> $caissier
+                ])
+            ;
+        }else{
+            $q = $this->createQueryBuilder('v')
+                ->leftJoin('v.facture', 'f')
+                ->leftJoin('v.produit', 'p')
+                ->where('f.date BETWEEN :debut AND :fin')
+                ->setParameters([
+                    'debut'=> $debut,
+                    'fin' => $fin
+                ])
+            ;
+        }
+
+
+        return $q->orderBy('p.libelle', 'ASC')->getQuery()->getResult();
+
+    }
 }
