@@ -47,6 +47,8 @@ class EtatProduitVenduController extends Controller
         return $this->render('AppBundle:EtatProduitVendu:index.html.twig', array(
             'ventes' => $ventes,
             'caissiers'=>$caissiers,
+            'date_debut' => $date_debut,
+            'date_fin' => $date_fin
         ));
     }
 

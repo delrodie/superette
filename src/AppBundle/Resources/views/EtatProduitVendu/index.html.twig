@@ -150,8 +150,13 @@
                                                     <strong>LISTE DES PRODUITS VENDUS</strong><br>
                                                 </p>
                                                 <div class="row">
-                                                    <div class="col-md-6 text-right">
-                                                        Periode: du <strong></strong> au  <strong></strong>
+                                                    <div class="col-md-12 text-right">
+                                                        {% if date_debut == date_fin %}
+                                                            Date:  <strong>{{ date_debut|date('d/m/Y') }}</strong>
+                                                        {% else %}
+                                                            Periode: du <strong>{{ date_debut|date('d/m/Y') }}</strong> au  <strong>{{ date_fin|date('d/m/Y') }}</strong>
+                                                        {% endif %}
+
                                                     </div>
                                                 </div>
                                                 <div class="row">
