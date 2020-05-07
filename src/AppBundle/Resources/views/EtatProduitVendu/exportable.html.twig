@@ -14,6 +14,9 @@
         <link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/css/feather-icons.css'))}}'/>
         <link rel='stylesheet' type='text/css' href='{{ absolute_url(asset('ressources/assets/css/atmos.min.css'))}}'/>
         <link rel="stylesheet" href="{{ absolute_url(asset('ressources/vendor/fontawesome/css/all.min.css')) }}">
+        <link rel="stylesheet" href="{{ asset('ressources/assets/css/databootstrap.css') }}">
+        <link rel="stylesheet" href="{{ asset('ressources/assets/css/dataTables.bootstrap4.min.css') }}">
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.bootstrap4.min.css">
     {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ absolute_url(asset('ressources/img/favicon.ico')) }}"/>
     <link rel="icon" href="{{ absolute_url(asset('ressources/img/favico.ico')) }}" type="image/png" sizes="16x16">
@@ -81,9 +84,9 @@
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="{{ path('produit_vendu_exportbale') }}" class=' menu-link'>
+                            <a href="{{ path('produit_vendu_index') }}" class=' menu-link'>
                                     <span class="menu-label">
-                                        <span class="menu-name">produits vendus <span class="badge badge-primary">Export</span></span>
+                                        <span class="menu-name">Produits vendu <span class="badge badge-primary">Liste</span></span>
                                     </span>
                                 <span class="menu-icon"><i class="icon-placeholder fa fa-cubes"></i></span>
                             </a>
@@ -114,7 +117,7 @@
                                 <div class="row">
                                     <div class="col-md-2"></div>
                                     <div class="col-md-8">
-                                        <form action="{{ path('produit_vendu_index') }}">
+                                        <form action="{{ path('produit_vendu_exportbale') }}">
                                             <div class="row mt-5">
                                                 <div class="col-md-3">
                                                     <select name="caissier" id="caissier" class="form-control">
@@ -176,7 +179,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <table class="table">
+                                                <table class="table table-striped" id="produitVendus" width="100%">
                                                     <thead>
                                                     <th>ID</th>
                                                     <th class="text-center">Dates</th>
@@ -198,19 +201,20 @@
                                                         {% set patot = patot + pa %}
                                                         {% set pv = vente.produit.prixVente * vente.quantite %}
                                                         {% set pvtot = pvtot + pv %}
-                                                        <tr>
+                                                        <tr style="font-size: .95rem;">
                                                             <td>{{ loop.index }}</td>
                                                             <td class="text-center">{{ vente.publieLe|date('d-m-Y H:i:s') }}</td>
                                                             <td class="text-left">{{ vente.produit.reference }} - {{ vente.produit.libelle }}</td>
                                                             <td class="text-center">{{ vente.quantite }}</td>
-                                                            <td class="text-right">{{ vente.produit.prixAchat|number_format(0,'','.') }}</td>
-                                                            <td class="text-right">{{ vente.produit.prixVente|number_format(0,'','.') }}</td>
-                                                            <td class="text-right">{{ bu|number_format(0,'','.') }}</td>
-                                                            <td class="text-right">{{ btot|number_format(0,'','.') }}</td>
+                                                            <td class="text-right">{{ vente.produit.prixAchat|number_format(0,'',',') }}</td>
+                                                            <td class="text-right">{{ vente.produit.prixVente|number_format(0,'',',') }}</td>
+                                                            <td class="text-right">{{ bu|number_format(0,'',',') }}</td>
+                                                            <td class="text-right">{{ btot|number_format(0,'',',') }}</td>
                                                         </tr>
                                                     {% endfor %}
                                                     </tbody>
-                                                    <tfooter>
+                                                    <tfoot>
+                                                        <tr><td colspan="8"></td></tr>
                                                         <tr>
                                                             <td colspan="2">Totaux</td>
                                                             <td colspan="2" class="text-right">Achats </td>
@@ -219,11 +223,11 @@
                                                         </tr>
                                                         <tr>
                                                             <td colspan="2"></td>
-                                                            <th colspan="2" class="text-right"> {{ patot|number_format(0,'','.') }}</th>
-                                                            <th colspan="2" class="text-center">{{ pvtot|number_format(0,'','.') }}  </th>
-                                                            <th colspan="2" class="text-center">{{ totaux|number_format(0,'','.') }} </th>
+                                                            <th colspan="2" class="text-right text-danger"> {{ patot|number_format(0,'','.') }}</th>
+                                                            <th colspan="2" class="text-center text-danger">{{ pvtot|number_format(0,'','.') }}  </th>
+                                                            <th colspan="2" class="text-center text-danger">{{ totaux|number_format(0,'','.') }} </th>
                                                         </tr>
-                                                    </tfooter>
+                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>
@@ -242,6 +246,29 @@
 {% block javascripts %}
     <script src='{{ absolute_url(asset('ressources/assets/bundles/9556cd6744b0b19628598270bd385082cda6a269.js')) }}'></script>
     <script src='{{ absolute_url(asset('ressources/assets/js/invoice-print.js'))}}'></script>
+    <script src="{{ asset('ressources/assets/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('ressources/assets/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('ressources/vendor/datatables/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('ressources/vendor/datatables/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('ressources/vendor/datatables/jszip.min.js') }}"></script>
+    <script src="{{ asset('ressources/vendor/datatables/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('ressources/vendor/datatables/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('ressources/vendor/datatables/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('ressources/vendor/datatables/buttons.print.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#produitVendus').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {extend: 'excelHtml5', footer: true},
+                    {extend: 'pdfHtml5', footer: true}
+                ],
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+                }
+            });
+        } );
+    </script>
 {% endblock %}
 </body>
 </html>

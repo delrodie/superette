@@ -56,7 +56,10 @@ class ProduitController extends Controller
 
             return $this->redirectToRoute('produit_index');
         }
-
+        //foreach ($produits as &$produit){
+        //    if (!$produit->getSlug()) dump($produit);die();
+        //}
+        //dump($produits);die();
         return $this->render('produit/index.html.twig', array(
             'produits' => $produits,
             'produit' => $produit,
