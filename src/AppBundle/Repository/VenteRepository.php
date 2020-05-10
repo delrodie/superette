@@ -34,8 +34,8 @@ class VenteRepository extends \Doctrine\ORM\EntityRepository
                 ->leftJoin('v.facture', 'f')
                 ->leftJoin('v.produit', 'p')
                 ->where('f.date BETWEEN :debut AND :fin')
-                //->andWhere('f.montant <> 0')
-                //->andWhere('f.statut IS NULL')
+                ->andWhere('f.montant <> 0')
+                ->andWhere('f.statut IS NULL')
                 ->setParameters([
                     'debut'=> $debut,
                     'fin' => $fin
