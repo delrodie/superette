@@ -20,6 +20,8 @@ class VenteRepository extends \Doctrine\ORM\EntityRepository
                 ->leftJoin('f.user', 'u')
                 ->leftJoin('v.produit', 'p')
                 ->where('f.date BETWEEN :debut AND :fin')
+                ->andWhere('f.montant <> 0')
+                ->andWhere('f.statut IS NULL')
                 ->andWhere('u.username = :caissier')
                 ->setParameters([
                     'debut'=> $debut,
@@ -32,6 +34,8 @@ class VenteRepository extends \Doctrine\ORM\EntityRepository
                 ->leftJoin('v.facture', 'f')
                 ->leftJoin('v.produit', 'p')
                 ->where('f.date BETWEEN :debut AND :fin')
+                ->andWhere('f.montant <> 0')
+                ->andWhere('f.statut IS NULL')
                 ->setParameters([
                     'debut'=> $debut,
                     'fin' => $fin
