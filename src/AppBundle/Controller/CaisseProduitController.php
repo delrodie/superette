@@ -66,6 +66,13 @@ class CaisseProduitController extends Controller
     public function deleteFactureAction(Request $request, Facture $facture)
     {
         $em = $this->getDoctrine()->getManager();
+        $ventes = $em->getRepository('AppBundle:Vente')->findBy(['facture'=>$facture->getId()]);
+        foreach ($ventes as $vente){
+            $produit = $em->getRepository('AppBundle:Produit')->findOneBy(['id'=>$vente->getProduit()->getId()]);
+            $quantite = $produit->getStock() + $vente->getQuantite();
+            $produit->setStock($quantite);
+            $em->persist($produit);
+        }
         $facture->setStatut(true);
         $em->flush();
 

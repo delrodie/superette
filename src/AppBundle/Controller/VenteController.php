@@ -127,6 +127,7 @@ class VenteController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            dump($vente); die();
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('vente_edit', array('id' => $vente->getId()));
