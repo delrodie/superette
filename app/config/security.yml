@@ -57,3 +57,4 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, role: ROLE_USER }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/liste-produit/caisse/, role: ROLE_ADMIN }
