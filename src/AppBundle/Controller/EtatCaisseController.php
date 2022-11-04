@@ -7,9 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Class EtatCaisseController
+ * @Security("has_role('ROLE_ADMIN')")
  * @Route("/etat/caisse")
  */
 class EtatCaisseController extends Controller
@@ -30,6 +32,7 @@ class EtatCaisseController extends Controller
     }
 
     /**
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/user", name="etat_caisse_show")
      * @Method({"GET","POST"})
      */
@@ -62,6 +65,7 @@ class EtatCaisseController extends Controller
     }
 
     /**
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/facture/{id}", name="etat_caisse_vente")
      * @Method("GET")
      */
@@ -77,6 +81,7 @@ class EtatCaisseController extends Controller
     }
 
     /**
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/{user}/{debut}/{fin}", name="etat_caisse_details")
      * @Method("GET")
      */
