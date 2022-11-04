@@ -6,9 +6,11 @@ use AppBundle\Entity\Inventaire;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- * Class EtatInventaireController
+ * Class EtatInventaireController*
+ * @Security("has_role('ROLE_ADMIN')")
  * @Route("/etat/inventaire")
  */
 class EtatInventaireController extends Controller
@@ -28,6 +30,7 @@ class EtatInventaireController extends Controller
     }
 
     /**
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/{id}", name="etat_inventaire_show")
      * @Method("GET")
      */
