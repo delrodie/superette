@@ -28,6 +28,7 @@ class CaisseProduitController extends Controller
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/caisse", name="caisse_jour")
      * @Method({"GET","POST"})
      */
