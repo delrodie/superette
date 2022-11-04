@@ -6,6 +6,7 @@ use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * User controller.
@@ -17,6 +18,7 @@ class UserController extends Controller
     /**
      * Lists all user entities.
      *
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/", name="admin_user_index")
      * @Method({"GET", "POST"})
      */
