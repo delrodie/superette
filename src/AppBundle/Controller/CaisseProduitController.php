@@ -8,7 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * Class CaisseProduitController
@@ -30,7 +29,7 @@ class CaisseProduitController extends Controller
     }
 
     /**
-     * @IsGranted("ROLE_ADMIN")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/caisse", name="caisse_jour")
      * @Method({"GET","POST"})
      */
